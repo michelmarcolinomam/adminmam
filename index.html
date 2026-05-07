@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAM Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0d0d0d;
+    --white: #ffffff;
+    --bg: #f7f7f5;
+    --border: #e5e5e5;
+    --gray: #999;
+    --gray2: #666;
+    --green: #16a34a;
+    --green-bg: #f0fdf4;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --yellow: #d97706;
+    --yellow-bg: #fffbeb;
+    --sidebar: 240px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { background: var(--bg); }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--black);
+    background: var(--bg);
+    min-height: 100vh;
+  }
+
+  /* ─── LOGIN ─── */
+  .login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+  }
+
+  .login-box {
+    background: #fff;
+    padding: 3rem;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .login-logo {
+    margin-bottom: 2.5rem;
+  }
+
+  .login-logo svg { height: 20px; fill: var(--black); }
+
+  .login-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: .3rem;
+  }
+
+  .login-sub {
+    font-size: .82rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+  }
+
+  .login-field {
+    margin-bottom: 1rem;
+  }
+
+  .login-field label {
+    display: block;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--gray2);
+    margin-bottom: .4rem;
+  }
+
+  .login-field input {
+    width: 100%;
+    padding: .75rem 1rem;
+    border: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: .88rem;
+    color: var(--black);
+    outline: none;
+    transition: border-color .2s;
+    background: #fff;
+  }
+
+  .login-field input:focus { border-color: var(--black); }
+
+  .login-btn {
+    width: 100%;
+    padding: .85rem;
+    background: var(--black);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .85rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    margin-top: .5rem;
+    transition: opacity .2s;
+  }
+
+  .login-btn:hover { opacity: .85; }
+
+  .login-error {
+    font-size: .78rem;
+    color: var(--red);
+    margin-top: .8rem;
+    display: none;
+  }
+
+  /* ─── LAYOUT PRINCIPAL ─── */
+  .app {
+    display: none;
+    min-height: 100vh;
+  }
+
+  .app.visible { display: flex; }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: var(--sidebar);
+    background: var(--black);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 50;
+  }
+
+  .sidebar-header {
+    padding: 1.8rem 1.5rem;
+    border-bottom: 1px solid #1c1c1c;
+  }
+
+  .sidebar-logo svg { height: 16px; fill: #fff; }
+
+  .sidebar-user {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #1c1c1c;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+  }
+
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .65rem;
+    font-weight: 600;
+    color: #999;
+    flex-shrink: 0;
+  }
+
+  .user-info {}
+  .user-name { font-size: .78rem; color: #ccc; font-weight: 500; }
+  .user-role { font-size: .68rem; color: #555; }
+
+  .sidebar-nav {
+    padding: 1rem 0;
+    flex: 1;
+  }
+
+  .nav-section-title {
+    font-size: .6rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #444;
+    padding: .8rem 1.5rem .4rem;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .6rem 1.5rem;
+    font-size: .82rem;
+    color: #666;
+    cursor: pointer;
+    transition: all .15s;
+    border-left: 2px solid transparent;
+    text-decoration: none;
+  }
+
+  .nav-item:hover { color: #ccc; background: #111; }
+
+  .nav-item.active {
+    color: #fff;
+    background: #111;
+    border-left-color: #fff;
+  }
+
+  .nav-item svg { width: 14px; height: 14px; flex-shrink: 0; opacity: .7; }
+  .nav-item.active svg { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #1c1c1c;
+  }
+
+  .logout-btn {
+    font-size: .78rem;
+    color: #444;
+    cursor: pointer;
+    transition: color .2s;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .logout-btn:hover { color: #999; }
+
+  /* ─── MAIN ─── */
+  .main {
+    margin-left: var(--sidebar);
+    flex: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+
+  .topbar-title {
+    font-size: .95rem;
+    font-weight: 600;
+  }
+
+  .topbar-actions { display: flex; gap: .6rem; align-items: center; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-family: 'Inter', sans-serif;
+    font-size: .78rem;
+    font-weight: 500;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    transition: all .15s;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--black);
+    color: #fff;
+  }
+
+  .btn-primary:hover { opacity: .85; }
+
+  .btn-secondary {
+    background: #fff;
+    color: var(--black);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover { background: var(--bg); }
+
+  .btn-danger {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid #fecaca;
+  }
+
+  .btn-danger:hover { background: #fee2e2; }
+
+  /* ─── CONTENT ─── */
+  .content {
+    padding: 2rem;
+    flex: 1;
+  }
+
+  /* ─── VIEWS ─── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ─── STATS ─── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: .6rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: .3rem;
+  }
+
+  .stat-sub { font-size: .75rem; color: var(--gray); }
+
+  /* ─── TABLE ─── */
+  .table-wrap {
+    background: #fff;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .table-header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .table-title { font-size: .88rem; font-weight: 600; }
+
+  .search-input {
+    padding: .4rem .8rem;
+    border: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: .78rem;
+    color: var(--black);
+    outline: none;
+    width: 200px;
+    transition: border-color .2s;
+    background: var(--bg);
+  }
+
+  .search-input:focus { border-color: var(--black); background: #fff; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    text-align: left;
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    padding: .8rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .15s;
+    cursor: pointer;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--bg); }
+
+  td {
+    padding: 1rem 1.5rem;
+    font-size: .82rem;
+    color: var(--black);
+    vertical-align: middle;
+  }
+
+  .td-title { font-weight: 500; }
+
+  .td-actions {
+    display: flex;
+    gap: .4rem;
+    justify-content: flex-end;
+  }
+
+  .action-btn {
+    padding: .3rem .7rem;
+    font-family: 'Inter', sans-serif;
+    font-size: .72rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--gray2);
+    transition: all .15s;
+  }
+
+  .action-btn:hover { background: var(--bg); color: var(--black); }
+
+  .action-btn.danger { color: var(--red); border-color: #fecaca; background: var(--red-bg); }
+  .action-btn.danger:hover { background: #fee2e2; }
+
+  /* ─── STATUS BADGE ─── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .68rem;
+    font-weight: 600;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+  }
+
+  .badge::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .badge-published { background: var(--green-bg); color: var(--green); }
+  .badge-draft { background: var(--yellow-bg); color: var(--yellow); }
+
+  /* ─── EDITOR ─── */
+  .editor-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .editor-main { display: flex; flex-direction: column; gap: 1rem; }
+
+  .editor-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .editor-card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .editor-card-title {
+    font-size: .82rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .editor-card-title svg { width: 14px; height: 14px; color: var(--gray); }
+
+  .card-toggle {
+    font-size: .72rem;
+    color: var(--gray);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .editor-card-body { padding: 1.5rem; }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .field {
+    margin-bottom: 1rem;
+  }
+
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: block;
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--gray2);
+    margin-bottom: .4rem;
+  }
+
+  .field input,
+  .field textarea,
+  .field select {
+    width: 100%;
+    padding: .6rem .8rem;
+    border: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: .82rem;
+    color: var(--black);
+    outline: none;
+    transition: border-color .2s;
+    background: #fff;
+    appearance: none;
+  }
+
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus { border-color: var(--black); }
+
+  .field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+  /* Upload de imagem */
+  .img-upload {
+    border: 2px dashed var(--border);
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img-upload:hover { border-color: var(--black); background: var(--bg); }
+
+  .img-upload input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .img-upload-icon { font-size: 1.5rem; margin-bottom: .5rem; color: var(--gray); }
+  .img-upload-text { font-size: .78rem; color: var(--gray); }
+  .img-upload-text strong { color: var(--black); }
+
+  .img-preview {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: none;
+    margin-bottom: .5rem;
+  }
+
+  /* Bloco de seção editorial */
+  .section-block {
+    border: 1px solid var(--border);
+    margin-bottom: .8rem;
+    overflow: hidden;
+  }
+
+  .section-block-header {
+    padding: .8rem 1rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .section-block-title {
+    font-size: .78rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .section-num {
+    width: 20px;
+    height: 20px;
+    background: var(--black);
+    color: #fff;
+    font-size: .6rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-block-body { padding: 1rem; display: none; }
+  .section-block-body.open { display: block; }
+
+  /* Sidebar do editor */
+  .editor-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+
+  .sidebar-card {
+    background: #fff;
+    border: 1px solid var(--border);
+  }
+
+  .sidebar-card-header {
+    padding: .8rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: .78rem;
+    font-weight: 600;
+  }
+
+  .sidebar-card-body { padding: 1rem; }
+
+  .status-select {
+    width: 100%;
+    padding: .5rem .8rem;
+    border: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: .82rem;
+    cursor: pointer;
+    background: #fff;
+    outline: none;
+  }
+
+  .publish-btn {
+    width: 100%;
+    padding: .7rem;
+    background: var(--black);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .82rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    margin-top: .8rem;
+    transition: opacity .2s;
+  }
+
+  .publish-btn:hover { opacity: .85; }
+
+  .preview-btn {
+    width: 100%;
+    padding: .7rem;
+    background: #fff;
+    color: var(--black);
+    font-family: 'Inter', sans-serif;
+    font-size: .82rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    margin-top: .5rem;
+    transition: background .2s;
+  }
+
+  .preview-btn:hover { background: var(--bg); }
+
+  .checklist { display: flex; flex-direction: column; gap: .5rem; }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .75rem;
+    color: var(--gray);
+  }
+
+  .check-item.done { color: var(--green); }
+
+  .check-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  .check-item.done .check-dot { background: var(--green); }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--black);
+    color: #fff;
+    padding: .8rem 1.5rem;
+    font-size: .82rem;
+    font-weight: 500;
+    z-index: 999;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all .3s;
+    pointer-events: none;
+  }
+
+  .toast.show { transform: none; opacity: 1; }
+
+  /* ─── EMPTY STATE ─── */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--gray);
+  }
+
+  .empty-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .empty-title { font-size: .95rem; font-weight: 500; color: var(--black); margin-bottom: .4rem; }
+  .empty-desc { font-size: .82rem; }
+
+  /* ─── CONFIRM MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: #fff;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+  }
+
+  .modal-title { font-size: .95rem; font-weight: 600; margin-bottom: .5rem; }
+  .modal-desc { font-size: .82rem; color: var(--gray); margin-bottom: 1.5rem; }
+  .modal-actions { display: flex; gap: .6rem; justify-content: flex-end; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <svg viewBox="0 0 743.9 150" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="690.5 17.9 657.7 106.2 651.9 121.8 646.1 106.2 613.3 17.9 581.2 17.9 581.2 132.1 599.9 132.1 599.9 35.3 635.9 132.1 667.9 132.1 703.9 35.3 703.9 132.1 722.6 132.1 722.6 17.9 690.5 17.9"/>
+        <path d="M473,17.9l-45.4,114.2h20l19.6-49.3,6.3,15.9h43.3l13.3,33.4h20l-45.4-114.2h-31.6ZM467.1,82.7l21.6-54.4,21.6,54.4h-43.2Z"/>
+        <polygon points="364.2 17.9 325.6 121.8 287 17.9 254.9 17.9 254.9 132.1 273.7 132.1 273.7 35.3 309.7 132.1 341.6 132.1 377.6 35.3 377.6 132.1 396.3 132.1 396.3 17.9 364.2 17.9"/>
+        <path d="M92,61.9L46.9,18h-25.7v114.1h25.7l31.6-30.9v-26.2l6.9,6.7h0s51.6,50.3,51.6,50.3h25.7V18h-25.7l-45.1,43.9ZM40,112.6V37.4l38.5,37.6-38.5,37.6ZM144,112.6l-38.5-37.6,38.5-37.6v75.2Z"/>
+      </svg>
+    </div>
+    <p class="login-title">Painel Administrativo</p>
+    <p class="login-sub">Entre com suas credenciais para continuar.</p>
+    <div class="login-field">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="seu@email.com">
+    </div>
+    <div class="login-field">
+      <label>Senha</label>
+      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <p class="login-error" id="loginError">Email ou senha incorretos.</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <svg viewBox="0 0 743.9 150" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="690.5 17.9 657.7 106.2 651.9 121.8 646.1 106.2 613.3 17.9 581.2 17.9 581.2 132.1 599.9 132.1 599.9 35.3 635.9 132.1 667.9 132.1 703.9 35.3 703.9 132.1 722.6 132.1 722.6 17.9 690.5 17.9"/>
+          <path d="M473,17.9l-45.4,114.2h20l19.6-49.3,6.3,15.9h43.3l13.3,33.4h20l-45.4-114.2h-31.6ZM467.1,82.7l21.6-54.4,21.6,54.4h-43.2Z"/>
+          <polygon points="364.2 17.9 325.6 121.8 287 17.9 254.9 17.9 254.9 132.1 273.7 132.1 273.7 35.3 309.7 132.1 341.6 132.1 377.6 35.3 377.6 132.1 396.3 132.1 396.3 17.9 364.2 17.9"/>
+          <path d="M92,61.9L46.9,18h-25.7v114.1h25.7l31.6-30.9v-26.2l6.9,6.7h0s51.6,50.3,51.6,50.3h25.7V18h-25.7l-45.1,43.9ZM40,112.6V37.4l38.5,37.6-38.5,37.6ZM144,112.6l-38.5-37.6,38.5-37.6v75.2Z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="userAvatar">AD</div>
+      <div class="user-info">
+        <div class="user-name" id="userName">Admin</div>
+        <div class="user-role">Editor</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Menu</div>
+      <a class="nav-item active" onclick="showView('dashboard')" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" onclick="showView('cases')" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Cases / Projetos
+      </a>
+      <a class="nav-item" onclick="showView('newCase')" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Novo Case
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sair
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <span class="topbar-title" id="topbarTitle">Dashboard</span>
+      <div class="topbar-actions" id="topbarActions"></div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="view active" id="view-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total de Cases</div>
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-sub">projetos cadastrados</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Publicados</div>
+            <div class="stat-value" id="statPublished">0</div>
+            <div class="stat-sub">visíveis no site</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Rascunhos</div>
+            <div class="stat-value" id="statDraft">0</div>
+            <div class="stat-sub">aguardando revisão</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Último update</div>
+            <div class="stat-value" style="font-size:1.2rem" id="statDate">—</div>
+            <div class="stat-sub">modificação recente</div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">Cases recentes</span>
+            <button class="btn btn-primary" onclick="showView('newCase')">+ Novo case</button>
+          </div>
+          <div id="dashboardTable"></div>
+        </div>
+      </div>
+
+      <!-- LISTA DE CASES -->
+      <div class="view" id="view-cases">
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">Todos os cases</span>
+            <div style="display:flex;gap:.6rem;align-items:center">
+              <input class="search-input" type="text" placeholder="Buscar case..." oninput="filterCases(this.value)">
+              <button class="btn btn-primary" onclick="showView('newCase')">+ Novo case</button>
+            </div>
+          </div>
+          <div id="casesTable"></div>
+        </div>
+      </div>
+
+      <!-- EDITOR DE CASE -->
+      <div class="view" id="view-newCase">
+        <div class="editor-layout">
+
+          <!-- COLUNA PRINCIPAL -->
+          <div class="editor-main">
+
+            <!-- DADOS BÁSICOS -->
+            <div class="editor-card">
+              <div class="editor-card-header">
+                <span class="editor-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  Informações do Case
+                </span>
+              </div>
+              <div class="editor-card-body">
+                <div class="field">
+                  <label>Nome do Cliente / Case *</label>
+                  <input type="text" id="f_client" placeholder="Ex: GoMee" oninput="updateChecklist()">
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label>Serviço *</label>
+                    <select id="f_service">
+                      <option value="">Selecionar...</option>
+                      <option>Branding Completo</option>
+                      <option>Rebranding</option>
+                      <option>Identidade Visual</option>
+                      <option>Posicionamento</option>
+                      <option>Ciclo de Marca</option>
+                      <option>Personal Brand</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Setor *</label>
+                    <input type="text" id="f_sector" placeholder="Ex: Suplementação" oninput="updateChecklist()">
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label>Ano</label>
+                    <input type="text" id="f_year" placeholder="Ex: 2024">
+                  </div>
+                  <div class="field">
+                    <label>Categoria (para filtro)</label>
+                    <select id="f_category">
+                      <option value="">Selecionar...</option>
+                      <option value="branding">Branding</option>
+                      <option value="rebranding">Rebranding</option>
+                      <option value="identidade">Identidade Visual</option>
+                      <option value="posicionamento">Posicionamento</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- IMAGEM HERO -->
+            <div class="editor-card">
+              <div class="editor-card-header">
+                <span class="editor-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  Imagem Principal (Hero)
+                </span>
+              </div>
+              <div class="editor-card-body">
+                <img id="heroPreview" class="img-preview">
+                <div class="img-upload" id="heroUpload">
+                  <input type="file" accept="image/*" onchange="previewImage(this, 'heroPreview', 'heroUpload')">
+                  <div class="img-upload-icon">🖼</div>
+                  <div class="img-upload-text"><strong>Clique para fazer upload</strong> ou arraste aqui<br><span style="font-size:.72rem;color:#bbb">PNG, JPG, WEBP — Recomendado: 2400×1200px</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INTRO -->
+            <div class="editor-card">
+              <div class="editor-card-header">
+                <span class="editor-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Texto de Introdução
+                </span>
+              </div>
+              <div class="editor-card-body">
+                <div class="field">
+                  <label>Título principal *</label>
+                  <input type="text" id="f_introTitle" placeholder="Ex: Uma marca criada para dominar o mercado" oninput="updateChecklist()">
+                </div>
+                <div class="field">
+                  <label>Parágrafo 1</label>
+                  <textarea id="f_introP1" placeholder="Contexto e desafio do projeto..."></textarea>
+                </div>
+                <div class="field">
+                  <label>Parágrafo 2</label>
+                  <textarea id="f_introP2" placeholder="Abordagem e solução..."></textarea>
+                </div>
+                <div class="field">
+                  <label>Entregáveis (um por linha)</label>
+                  <textarea id="f_deliverables" placeholder="Nome de Marca&#10;Estratégia de Marca&#10;Direção Criativa&#10;Identidade Visual"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- SEÇÕES EDITORIAIS -->
+            <div class="editor-card">
+              <div class="editor-card-header">
+                <span class="editor-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  Seções do Projeto
+                </span>
+              </div>
+              <div class="editor-card-body" id="sectionsContainer">
+
+                <!-- Seção 1 -->
+                <div class="section-block">
+                  <div class="section-block-header" onclick="toggleSection(this)">
+                    <span class="section-block-title"><span class="section-num">1</span> Estratégia de Marca</span>
+                    <span style="font-size:.7rem;color:var(--gray)">▼</span>
+                  </div>
+                  <div class="section-block-body open">
+                    <div class="field">
+                      <label>Título da seção</label>
+                      <input type="text" placeholder="Ex: Não basta ser diferente...">
+                    </div>
+                    <div class="field">
+                      <label>Texto</label>
+                      <textarea placeholder="Descrição da estratégia de marca..."></textarea>
+                    </div>
+                    <div class="field">
+                      <label>Imagem da seção</label>
+                      <div class="img-upload" style="padding:1rem">
+                        <input type="file" accept="image/*">
+                        <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Seção 2 -->
+                <div class="section-block">
+                  <div class="section-block-header" onclick="toggleSection(this)">
+                    <span class="section-block-title"><span class="section-num">2</span> Direção Criativa</span>
+                    <span style="font-size:.7rem;color:var(--gray)">▼</span>
+                  </div>
+                  <div class="section-block-body">
+                    <div class="field">
+                      <label>Título da seção</label>
+                      <input type="text" placeholder="Ex: Contraste como linguagem...">
+                    </div>
+                    <div class="field">
+                      <label>Texto</label>
+                      <textarea placeholder="Descrição da direção criativa..."></textarea>
+                    </div>
+                    <div class="field">
+                      <label>Imagem da seção</label>
+                      <div class="img-upload" style="padding:1rem">
+                        <input type="file" accept="image/*">
+                        <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Seção 3 -->
+                <div class="section-block">
+                  <div class="section-block-header" onclick="toggleSection(this)">
+                    <span class="section-block-title"><span class="section-num">3</span> Identidade Visual</span>
+                    <span style="font-size:.7rem;color:var(--gray)">▼</span>
+                  </div>
+                  <div class="section-block-body">
+                    <div class="field">
+                      <label>Título da seção</label>
+                      <input type="text" placeholder="Ex: Um sistema que funciona em qualquer superfície...">
+                    </div>
+                    <div class="field">
+                      <label>Texto</label>
+                      <textarea placeholder="Descrição da identidade visual..."></textarea>
+                    </div>
+                    <div class="field">
+                      <label>Imagem da seção</label>
+                      <div class="img-upload" style="padding:1rem">
+                        <input type="file" accept="image/*">
+                        <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Seção 4 -->
+                <div class="section-block">
+                  <div class="section-block-header" onclick="toggleSection(this)">
+                    <span class="section-block-title"><span class="section-num">4</span> Embalagem</span>
+                    <span style="font-size:.7rem;color:var(--gray)">▼</span>
+                  </div>
+                  <div class="section-block-body">
+                    <div class="field">
+                      <label>Título da seção</label>
+                      <input type="text" placeholder="Ex: A embalagem que vende antes do consumidor provar...">
+                    </div>
+                    <div class="field">
+                      <label>Texto</label>
+                      <textarea placeholder="Descrição do design de embalagem..."></textarea>
+                    </div>
+                    <div class="field">
+                      <label>Imagem da seção</label>
+                      <div class="img-upload" style="padding:1rem">
+                        <input type="file" accept="image/*">
+                        <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- GALERIA -->
+            <div class="editor-card">
+              <div class="editor-card-header">
+                <span class="editor-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  Galeria de Imagens
+                </span>
+              </div>
+              <div class="editor-card-body">
+                <div class="img-upload">
+                  <input type="file" accept="image/*" multiple>
+                  <div class="img-upload-icon">🖼</div>
+                  <div class="img-upload-text"><strong>Selecione múltiplas imagens</strong> para a galeria<br><span style="font-size:.72rem;color:#bbb">As imagens serão exibidas em grid no case</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PRÓXIMO CASE -->
+            <div class="editor-card">
+              <div class="editor-card-header">
+                <span class="editor-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  Próximo Case
+                </span>
+              </div>
+              <div class="editor-card-body">
+                <div class="field">
+                  <label>Nome do próximo case</label>
+                  <input type="text" id="f_nextCase" placeholder="Ex: Âmbar Tobacco">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- SIDEBAR DO EDITOR -->
+          <div class="editor-sidebar">
+
+            <div class="sidebar-card">
+              <div class="sidebar-card-header">Publicação</div>
+              <div class="sidebar-card-body">
+                <div class="field">
+                  <label>Status</label>
+                  <select class="status-select" id="f_status">
+                    <option value="draft">Rascunho</option>
+                    <option value="published">Publicado</option>
+                  </select>
+                </div>
+                <button class="publish-btn" onclick="saveCase()">Salvar case</button>
+                <button class="preview-btn" onclick="showToast('Preview em breve disponível')">Visualizar preview</button>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sidebar-card-header">Checklist</div>
+              <div class="sidebar-card-body">
+                <div class="checklist" id="checklist">
+                  <div class="check-item" id="chk_client">
+                    <span class="check-dot"></span> Nome do cliente
+                  </div>
+                  <div class="check-item" id="chk_service">
+                    <span class="check-dot"></span> Serviço definido
+                  </div>
+                  <div class="check-item" id="chk_sector">
+                    <span class="check-dot"></span> Setor preenchido
+                  </div>
+                  <div class="check-item" id="chk_intro">
+                    <span class="check-dot"></span> Título de intro
+                  </div>
+                  <div class="check-item" id="chk_hero">
+                    <span class="check-dot"></span> Imagem hero
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sidebar-card-header">Dicas</div>
+              <div class="sidebar-card-body">
+                <p style="font-size:.75rem;color:var(--gray);line-height:1.6">
+                  • Imagens em formato landscape (16:9) funcionam melhor no hero.<br><br>
+                  • Mantenha os textos das seções entre 80–150 palavras.<br><br>
+                  • Publique só quando todas as seções estiverem revisadas.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <p class="modal-title">Excluir case?</p>
+    <p class="modal-desc">Esta ação não pode ser desfeita. O case será removido permanentemente.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DADOS ───
+const USERS = [
+  { email: 'admin@mam.com.br', pass: 'mam2024', name: 'Admin MAM', role: 'Administrador' },
+  { email: 'editor@mam.com.br', pass: 'editor123', name: 'Editor', role: 'Editor' },
+];
+
+let cases = [
+  { id: 1, client: 'GoMee', service: 'Branding Completo', sector: 'Suplementação', year: '2024', status: 'published', updatedAt: '2024-11-15' },
+  { id: 2, client: 'Âmbar Tobacco', service: 'Branding', sector: 'Tabacaria Premium', year: '2024', status: 'published', updatedAt: '2024-10-22' },
+  { id: 3, client: 'Laflô', service: 'Identidade Visual', sector: 'Cosméticos', year: '2023', status: 'published', updatedAt: '2023-12-01' },
+  { id: 4, client: 'Mate Loco', service: 'Rebranding', sector: 'Bebidas', year: '2023', status: 'draft', updatedAt: '2023-09-10' },
+  { id: 5, client: 'OP Capital', service: 'Posicionamento', sector: 'Financeiro', year: '2023', status: 'published', updatedAt: '2023-08-05' },
+];
+
+let currentUser = null;
+let deleteTargetId = null;
+let editingId = null;
+
+// ─── LOGIN ───
+function doLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const pass = document.getElementById('loginPass').value;
+  const user = USERS.find(u => u.email === email && u.pass === pass);
+
+  if (user) {
+    currentUser = user;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    document.getElementById('userName').textContent = user.name;
+    document.getElementById('userAvatar').textContent = user.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    updateStats();
+    renderDashboardTable();
+    renderCasesTable(cases);
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginError').style.display = 'none';
+}
+
+// ─── NAVEGAÇÃO ───
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+
+  const titles = { dashboard: 'Dashboard', cases: 'Cases / Projetos', newCase: editingId ? 'Editar Case' : 'Novo Case' };
+  document.getElementById('topbarTitle').textContent = titles[name] || name;
+
+  const actions = { cases: '<button class="btn btn-primary" onclick="showView(\'newCase\')">+ Novo case</button>' };
+  document.getElementById('topbarActions').innerHTML = actions[name] || '';
+
+  const navMap = { dashboard: 0, cases: 1, newCase: 2 };
+  document.querySelectorAll('.nav-item')[navMap[name]]?.classList.add('active');
+
+  if (name === 'newCase' && !editingId) resetForm();
+}
+
+// ─── STATS ───
+function updateStats() {
+  const published = cases.filter(c => c.status === 'published').length;
+  const draft = cases.filter(c => c.status === 'draft').length;
+  const latest = cases.sort((a,b) => b.updatedAt.localeCompare(a.updatedAt))[0];
+
+  document.getElementById('statTotal').textContent = cases.length;
+  document.getElementById('statPublished').textContent = published;
+  document.getElementById('statDraft').textContent = draft;
+  document.getElementById('statDate').textContent = latest ? formatDate(latest.updatedAt) : '—';
+}
+
+function formatDate(str) {
+  const d = new Date(str);
+  return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+}
+
+// ─── TABELAS ───
+function renderTable(data, container) {
+  if (!data.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📁</div><div class="empty-title">Nenhum case encontrado</div><div class="empty-desc">Crie seu primeiro case clicando em "+ Novo case"</div></div>';
+    return;
+  }
+
+  container.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Serviço</th>
+          <th>Setor</th>
+          <th>Ano</th>
+          <th>Status</th>
+          <th>Atualizado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(c => `
+          <tr onclick="editCase(${c.id})">
+            <td class="td-title">${c.client}</td>
+            <td>${c.service}</td>
+            <td>${c.sector}</td>
+            <td>${c.year}</td>
+            <td><span class="badge badge-${c.status}">${c.status === 'published' ? 'Publicado' : 'Rascunho'}</span></td>
+            <td style="color:var(--gray)">${formatDate(c.updatedAt)}</td>
+            <td>
+              <div class="td-actions" onclick="event.stopPropagation()">
+                <button class="action-btn" onclick="editCase(${c.id})">Editar</button>
+                <button class="action-btn danger" onclick="openDeleteModal(${c.id})">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderDashboardTable() {
+  renderTable(cases.slice(0, 5), document.getElementById('dashboardTable'));
+}
+
+function renderCasesTable(data) {
+  renderTable(data, document.getElementById('casesTable'));
+}
+
+function filterCases(query) {
+  const filtered = cases.filter(c =>
+    c.client.toLowerCase().includes(query.toLowerCase()) ||
+    c.service.toLowerCase().includes(query.toLowerCase()) ||
+    c.sector.toLowerCase().includes(query.toLowerCase())
+  );
+  renderCasesTable(filtered);
+}
+
+// ─── EDITOR ───
+function resetForm() {
+  editingId = null;
+  ['f_client','f_service','f_sector','f_year','f_introTitle','f_introP1','f_introP2','f_deliverables','f_nextCase'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('f_status').value = 'draft';
+  document.getElementById('heroPreview').style.display = 'none';
+  document.getElementById('heroUpload').querySelector('.img-upload-text').style.display = 'block';
+  updateChecklist();
+}
+
+function editCase(id) {
+  const c = cases.find(x => x.id === id);
+  if (!c) return;
+  editingId = id;
+  showView('newCase');
+  document.getElementById('f_client').value = c.client;
+  document.getElementById('f_service').value = c.service;
+  document.getElementById('f_sector').value = c.sector;
+  document.getElementById('f_year').value = c.year;
+  document.getElementById('f_status').value = c.status;
+  document.getElementById('topbarTitle').textContent = `Editando: ${c.client}`;
+  updateChecklist();
+  showToast('Case carregado para edição');
+}
+
+function saveCase() {
+  const client = document.getElementById('f_client').value.trim();
+  if (!client) { showToast('Preencha o nome do cliente'); return; }
+
+  const data = {
+    id: editingId || Date.now(),
+    client,
+    service: document.getElementById('f_service').value || '—',
+    sector: document.getElementById('f_sector').value || '—',
+    year: document.getElementById('f_year').value || new Date().getFullYear().toString(),
+    status: document.getElementById('f_status').value,
+    updatedAt: new Date().toISOString().slice(0,10),
+  };
+
+  if (editingId) {
+    const idx = cases.findIndex(c => c.id === editingId);
+    cases[idx] = data;
+    showToast('Case atualizado com sucesso!');
+  } else {
+    cases.unshift(data);
+    showToast('Case criado com sucesso!');
+  }
+
+  editingId = null;
+  updateStats();
+  renderDashboardTable();
+  renderCasesTable(cases);
+  setTimeout(() => showView('cases'), 800);
+}
+
+// ─── CHECKLIST ───
+function updateChecklist() {
+  const checks = {
+    chk_client: !!document.getElementById('f_client')?.value.trim(),
+    chk_service: !!document.getElementById('f_service')?.value,
+    chk_sector: !!document.getElementById('f_sector')?.value.trim(),
+    chk_intro: !!document.getElementById('f_introTitle')?.value.trim(),
+    chk_hero: document.getElementById('heroPreview')?.style.display === 'block',
+  };
+
+  Object.entries(checks).forEach(([id, done]) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('done', done);
+  });
+}
+
+// ─── IMAGEM ───
+function previewImage(input, previewId, uploadId) {
+  if (!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(previewId);
+    img.src = e.target.result;
+    img.style.display = 'block';
+    document.getElementById(uploadId).querySelector('.img-upload-text').style.display = 'none';
+    updateChecklist();
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ─── SEÇÕES ───
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+  header.querySelector('span:last-child').textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+// ─── DELETE ───
+function openDeleteModal(id) {
+  deleteTargetId = id;
+  document.getElementById('deleteModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('deleteModal').classList.remove('open');
+  deleteTargetId = null;
+}
+
+function confirmDelete() {
+  cases = cases.filter(c => c.id !== deleteTargetId);
+  closeModal();
+  updateStats();
+  renderDashboardTable();
+  renderCasesTable(cases);
+  showToast('Case excluído.');
+}
+
+// ─── TOAST ───
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
