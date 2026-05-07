@@ -691,6 +691,39 @@
 
   .check-item.done .check-dot { background: var(--green); }
 
+  .add-section-btn {
+    width: 100%;
+    padding: .8rem;
+    border: 2px dashed var(--border);
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all .2s;
+    margin-top: .5rem;
+  }
+
+  .add-section-btn:hover {
+    border-color: var(--black);
+    color: var(--black);
+    background: var(--bg);
+  }
+
+  .section-remove-btn {
+    background: none;
+    border: none;
+    font-size: .7rem;
+    color: var(--red);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    padding: .2rem .5rem;
+    transition: opacity .2s;
+  }
+
+  .section-remove-btn:hover { opacity: .7; }
+
   /* ─── TOAST ─── */
   .toast {
     position: fixed;
@@ -992,105 +1025,8 @@
               </div>
               <div class="editor-card-body" id="sectionsContainer">
 
-                <!-- Seção 1 -->
-                <div class="section-block">
-                  <div class="section-block-header" onclick="toggleSection(this)">
-                    <span class="section-block-title"><span class="section-num">1</span> Estratégia de Marca</span>
-                    <span style="font-size:.7rem;color:var(--gray)">▼</span>
-                  </div>
-                  <div class="section-block-body open">
-                    <div class="field">
-                      <label>Título da seção</label>
-                      <input type="text" placeholder="Ex: Não basta ser diferente...">
-                    </div>
-                    <div class="field">
-                      <label>Texto</label>
-                      <textarea placeholder="Descrição da estratégia de marca..."></textarea>
-                    </div>
-                    <div class="field">
-                      <label>Imagem da seção</label>
-                      <div class="img-upload" style="padding:1rem">
-                        <input type="file" accept="image/*">
-                        <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Seção 2 -->
-                <div class="section-block">
-                  <div class="section-block-header" onclick="toggleSection(this)">
-                    <span class="section-block-title"><span class="section-num">2</span> Direção Criativa</span>
-                    <span style="font-size:.7rem;color:var(--gray)">▼</span>
-                  </div>
-                  <div class="section-block-body">
-                    <div class="field">
-                      <label>Título da seção</label>
-                      <input type="text" placeholder="Ex: Contraste como linguagem...">
-                    </div>
-                    <div class="field">
-                      <label>Texto</label>
-                      <textarea placeholder="Descrição da direção criativa..."></textarea>
-                    </div>
-                    <div class="field">
-                      <label>Imagem da seção</label>
-                      <div class="img-upload" style="padding:1rem">
-                        <input type="file" accept="image/*">
-                        <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Seção 3 -->
-                <div class="section-block">
-                  <div class="section-block-header" onclick="toggleSection(this)">
-                    <span class="section-block-title"><span class="section-num">3</span> Identidade Visual</span>
-                    <span style="font-size:.7rem;color:var(--gray)">▼</span>
-                  </div>
-                  <div class="section-block-body">
-                    <div class="field">
-                      <label>Título da seção</label>
-                      <input type="text" placeholder="Ex: Um sistema que funciona em qualquer superfície...">
-                    </div>
-                    <div class="field">
-                      <label>Texto</label>
-                      <textarea placeholder="Descrição da identidade visual..."></textarea>
-                    </div>
-                    <div class="field">
-                      <label>Imagem da seção</label>
-                      <div class="img-upload" style="padding:1rem">
-                        <input type="file" accept="image/*">
-                        <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Seção 4 -->
-                <div class="section-block">
-                  <div class="section-block-header" onclick="toggleSection(this)">
-                    <span class="section-block-title"><span class="section-num">4</span> Embalagem</span>
-                    <span style="font-size:.7rem;color:var(--gray)">▼</span>
-                  </div>
-                  <div class="section-block-body">
-                    <div class="field">
-                      <label>Título da seção</label>
-                      <input type="text" placeholder="Ex: A embalagem que vende antes do consumidor provar...">
-                    </div>
-                    <div class="field">
-                      <label>Texto</label>
-                      <textarea placeholder="Descrição do design de embalagem..."></textarea>
-                    </div>
-                    <div class="field">
-                      <label>Imagem da seção</label>
-                      <div class="img-upload" style="padding:1rem">
-                        <input type="file" accept="image/*">
-                        <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <div id="dynamicSections"></div>
+                <button type="button" class="add-section-btn" onclick="addSection()">+ Adicionar seção</button>
 
               </div>
             </div>
@@ -1355,6 +1291,9 @@ function resetForm() {
     if (el) el.value = '';
   });
   document.getElementById('f_status').value = 'draft';
+  document.getElementById('dynamicSections').innerHTML = '';
+  sectionCount = 0;
+  addSection('Estratégia de Marca');
   document.getElementById('heroPreview').style.display = 'none';
   document.getElementById('heroUpload').querySelector('.img-upload-text').style.display = 'block';
   updateChecklist();
@@ -1435,11 +1374,79 @@ function previewImage(input, previewId, uploadId) {
   reader.readAsDataURL(input.files[0]);
 }
 
-// ─── SEÇÕES ───
+// ─── SEÇÕES DINÂMICAS ───
+let sectionCount = 0;
+
+function addSection(name = '') {
+  sectionCount++;
+  const num = sectionCount;
+  const container = document.getElementById('dynamicSections');
+  const id = 'section_' + num;
+
+  const div = document.createElement('div');
+  div.className = 'section-block';
+  div.id = id;
+  div.innerHTML = `
+    <div class="section-block-header">
+      <span class="section-block-title">
+        <span class="section-num">${num}</span>
+        <input type="text" value="${name}" placeholder="Nome da seção (ex: Estratégia de Marca)"
+          style="border:none;background:transparent;font-family:Inter,sans-serif;font-size:.78rem;font-weight:600;color:var(--black);outline:none;width:200px;"
+          onclick="event.stopPropagation()">
+      </span>
+      <div style="display:flex;align-items:center;gap:.5rem">
+        <button type="button" class="section-remove-btn" onclick="removeSection('${id}')">Remover</button>
+        <span style="font-size:.7rem;color:var(--gray);cursor:pointer" onclick="toggleSection(this.closest('.section-block-header'))">▲</span>
+      </div>
+    </div>
+    <div class="section-block-body open">
+      <div class="field">
+        <label>Título da seção</label>
+        <input type="text" placeholder="Ex: Não basta ser diferente...">
+      </div>
+      <div class="field">
+        <label>Texto</label>
+        <textarea placeholder="Descreva o que foi desenvolvido nessa etapa..."></textarea>
+      </div>
+      <div class="field">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem">
+          <input type="checkbox" id="img_toggle_\${num}" onchange="toggleImgField(this, 'img_wrap_\${num}')" style="cursor:pointer;width:14px;height:14px">
+          <label for="img_toggle_\${num}" style="font-size:.7rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--gray2);cursor:pointer;margin:0">Adicionar imagem nesta seção</label>
+        </div>
+        <div id="img_wrap_\${num}" style="display:none">
+          <div class="img-upload" style="padding:1rem">
+            <input type="file" accept="image/*">
+            <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(div);
+  renumberSections();
+}
+
+function toggleImgField(checkbox, wrapId) {
+  document.getElementById(wrapId).style.display = checkbox.checked ? 'block' : 'none';
+}
+
+function removeSection(id) {
+  document.getElementById(id)?.remove();
+  renumberSections();
+}
+
+function renumberSections() {
+  document.querySelectorAll('#dynamicSections .section-num').forEach((el, i) => {
+    el.textContent = i + 1;
+  });
+}
+
 function toggleSection(header) {
   const body = header.nextElementSibling;
   body.classList.toggle('open');
-  header.querySelector('span:last-child').textContent = body.classList.contains('open') ? '▲' : '▼';
+  const arrow = header.querySelector('span[style*="cursor:pointer"]') || header.querySelector('span:last-child');
+  if (arrow) arrow.textContent = body.classList.contains('open') ? '▲' : '▼';
 }
 
 // ─── DELETE ───
