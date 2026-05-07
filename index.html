@@ -691,6 +691,49 @@
 
   .check-item.done .check-dot { background: var(--green); }
 
+  .generate-btn {
+    display: block;
+    width: 100%;
+    margin-top: .6rem;
+    padding: .7rem;
+    background: var(--black);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .78rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: opacity .2s;
+    text-align: center;
+  }
+
+  .generate-btn:hover { opacity: .85; }
+
+  .section-block.disabled {
+    opacity: .45;
+  }
+
+  .section-keep-toggle {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .7rem;
+    font-weight: 500;
+    color: var(--green);
+    cursor: pointer;
+    padding: .2rem .6rem;
+    background: var(--green-bg);
+    border: 1px solid #bbf7d0;
+    border-radius: 999px;
+    transition: all .2s;
+  }
+
+  .section-keep-toggle.excluded {
+    color: var(--red);
+    background: var(--red-bg);
+    border-color: #fecaca;
+  }
+
   .add-section-btn {
     width: 100%;
     padding: .8rem;
@@ -1010,7 +1053,8 @@
                 </div>
                 <div class="field">
                   <label>Entregáveis (um por linha)</label>
-                  <textarea id="f_deliverables" placeholder="Nome de Marca&#10;Estratégia de Marca&#10;Direção Criativa&#10;Identidade Visual"></textarea>
+                  <textarea id="f_deliverables" placeholder="Nome de Marca&#10;Estratégia de Marca&#10;Direção Criativa&#10;Identidade Visual&#10;Design de Embalagem" rows="6"></textarea>
+                  <button type="button" class="generate-btn" onclick="generateSections()">↓ Gerar seções a partir dos entregáveis</button>
                 </div>
               </div>
             </div>
@@ -1020,7 +1064,7 @@
               <div class="editor-card-header">
                 <span class="editor-card-title">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                  Seções do Projeto
+                  Seções do Projeto <span id="sectionCount" style="font-size:.7rem;font-weight:400;color:var(--gray);margin-left:.3rem"></span>
                 </span>
               </div>
               <div class="editor-card-body" id="sectionsContainer">
@@ -1293,7 +1337,7 @@ function resetForm() {
   document.getElementById('f_status').value = 'draft';
   document.getElementById('dynamicSections').innerHTML = '';
   sectionCount = 0;
-  addSection('Estratégia de Marca');
+  updateSectionCount();
   document.getElementById('heroPreview').style.display = 'none';
   document.getElementById('heroUpload').querySelector('.img-upload-text').style.display = 'block';
   updateChecklist();
@@ -1390,12 +1434,10 @@ function addSection(name = '') {
     <div class="section-block-header">
       <span class="section-block-title">
         <span class="section-num">${num}</span>
-        <input type="text" value="${name}" placeholder="Nome da seção (ex: Estratégia de Marca)"
-          style="border:none;background:transparent;font-family:Inter,sans-serif;font-size:.78rem;font-weight:600;color:var(--black);outline:none;width:200px;"
-          onclick="event.stopPropagation()">
+        <span style="font-size:.82rem;font-weight:600">${name || 'Nova seção'}</span>
       </span>
       <div style="display:flex;align-items:center;gap:.5rem">
-        <button type="button" class="section-remove-btn" onclick="removeSection('${id}')">Remover</button>
+        <button type="button" class="section-keep-toggle" id="toggle_${id}" onclick="toggleKeepSection(this, '${id}')">✓ Incluir</button>
         <span style="font-size:.7rem;color:var(--gray);cursor:pointer" onclick="toggleSection(this.closest('.section-block-header'))">▲</span>
       </div>
     </div>
@@ -1425,6 +1467,51 @@ function addSection(name = '') {
 
   container.appendChild(div);
   renumberSections();
+}
+
+function generateSections() {
+  const raw = document.getElementById('f_deliverables').value.trim();
+  if (!raw) { showToast('Preencha os entregáveis primeiro'); return; }
+
+  const items = raw.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!items.length) { showToast('Nenhum entregável encontrado'); return; }
+
+  // Limpar seções existentes
+  document.getElementById('dynamicSections').innerHTML = '';
+  sectionCount = 0;
+
+  // Criar uma seção para cada entregável
+  items.forEach(name => addSection(name));
+
+  updateSectionCount();
+  showToast(`${items.length} seções geradas com sucesso!`);
+
+  // Scroll suave até as seções
+  document.getElementById('dynamicSections').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateSectionCount() {
+  const total = document.querySelectorAll('#dynamicSections .section-block:not(.excluded-section)').length;
+  const counter = document.getElementById('sectionCount');
+  if (counter) counter.textContent = total ? `(${total} ativas)` : '';
+}
+
+function toggleKeepSection(btn, id) {
+  const block = document.getElementById(id);
+  const isExcluded = block.classList.contains('disabled');
+
+  if (isExcluded) {
+    block.classList.remove('disabled');
+    btn.classList.remove('excluded');
+    btn.textContent = '✓ Incluir';
+    block.classList.remove('excluded-section');
+  } else {
+    block.classList.add('disabled');
+    btn.classList.add('excluded');
+    btn.textContent = '✕ Excluída';
+    block.classList.add('excluded-section');
+  }
+  updateSectionCount();
 }
 
 function toggleImgField(checkbox, wrapId) {
