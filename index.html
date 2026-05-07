@@ -19,7 +19,9 @@
     --red-bg: #fef2f2;
     --yellow: #d97706;
     --yellow-bg: #fffbeb;
-    --sidebar: 240px;
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+    --sidebar: 220px;
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,784 +44,241 @@
     background: var(--black);
   }
 
-  .login-box {
-    background: #fff;
-    padding: 3rem;
-    width: 100%;
-    max-width: 400px;
-  }
-
-  .login-logo {
-    margin-bottom: 2.5rem;
-  }
-
+  .login-box { background: #fff; padding: 3rem; width: 100%; max-width: 400px; }
+  .login-logo { margin-bottom: 2.5rem; }
   .login-logo svg { height: 20px; fill: var(--black); }
-
-  .login-title {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: .3rem;
-  }
-
-  .login-sub {
-    font-size: .82rem;
-    color: var(--gray);
-    margin-bottom: 2rem;
-  }
-
-  .login-field {
-    margin-bottom: 1rem;
-  }
-
-  .login-field label {
-    display: block;
-    font-size: .72rem;
-    font-weight: 500;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    color: var(--gray2);
-    margin-bottom: .4rem;
-  }
-
-  .login-field input {
-    width: 100%;
-    padding: .75rem 1rem;
-    border: 1px solid var(--border);
-    font-family: 'Inter', sans-serif;
-    font-size: .88rem;
-    color: var(--black);
-    outline: none;
-    transition: border-color .2s;
-    background: #fff;
-  }
-
+  .login-title { font-size: 1rem; font-weight: 600; margin-bottom: .3rem; }
+  .login-sub { font-size: .82rem; color: var(--gray); margin-bottom: 2rem; }
+  .login-field { margin-bottom: 1rem; }
+  .login-field label { display: block; font-size: .72rem; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--gray2); margin-bottom: .4rem; }
+  .login-field input { width: 100%; padding: .75rem 1rem; border: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .88rem; color: var(--black); outline: none; transition: border-color .2s; background: #fff; }
   .login-field input:focus { border-color: var(--black); }
-
-  .login-btn {
-    width: 100%;
-    padding: .85rem;
-    background: var(--black);
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: .85rem;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-    margin-top: .5rem;
-    transition: opacity .2s;
-  }
-
+  .login-btn { width: 100%; padding: .85rem; background: var(--black); color: #fff; font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 500; border: none; cursor: pointer; margin-top: .5rem; transition: opacity .2s; }
   .login-btn:hover { opacity: .85; }
+  .login-error { font-size: .78rem; color: var(--red); margin-top: .8rem; display: none; }
 
-  .login-error {
-    font-size: .78rem;
-    color: var(--red);
-    margin-top: .8rem;
-    display: none;
-  }
-
-  /* ─── LAYOUT PRINCIPAL ─── */
-  .app {
-    display: none;
-    min-height: 100vh;
-  }
-
+  /* ─── APP ─── */
+  .app { display: none; min-height: 100vh; }
   .app.visible { display: flex; }
 
   /* ─── SIDEBAR ─── */
-  .sidebar {
-    width: var(--sidebar);
-    background: var(--black);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    z-index: 50;
-  }
-
-  .sidebar-header {
-    padding: 1.8rem 1.5rem;
-    border-bottom: 1px solid #1c1c1c;
-  }
-
+  .sidebar { width: var(--sidebar); background: var(--black); min-height: 100vh; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; }
+  .sidebar-header { padding: 1.6rem 1.5rem; border-bottom: 1px solid #1c1c1c; }
   .sidebar-logo svg { height: 16px; fill: #fff; }
-
-  .sidebar-user {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #1c1c1c;
-    display: flex;
-    align-items: center;
-    gap: .8rem;
-  }
-
-  .user-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .65rem;
-    font-weight: 600;
-    color: #999;
-    flex-shrink: 0;
-  }
-
-  .user-info {}
+  .sidebar-user { padding: 1rem 1.5rem; border-bottom: 1px solid #1c1c1c; display: flex; align-items: center; gap: .8rem; }
+  .user-avatar { width: 28px; height: 28px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-size: .65rem; font-weight: 600; color: #999; flex-shrink: 0; }
   .user-name { font-size: .78rem; color: #ccc; font-weight: 500; }
   .user-role { font-size: .68rem; color: #555; }
-
-  .sidebar-nav {
-    padding: 1rem 0;
-    flex: 1;
-  }
-
-  .nav-section-title {
-    font-size: .6rem;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: #444;
-    padding: .8rem 1.5rem .4rem;
-  }
-
-  .nav-item {
-    display: flex;
-    align-items: center;
-    gap: .7rem;
-    padding: .6rem 1.5rem;
-    font-size: .82rem;
-    color: #666;
-    cursor: pointer;
-    transition: all .15s;
-    border-left: 2px solid transparent;
-    text-decoration: none;
-  }
-
+  .sidebar-nav { padding: 1rem 0; flex: 1; overflow-y: auto; }
+  .nav-section-title { font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: #444; padding: .8rem 1.5rem .4rem; }
+  .nav-item { display: flex; align-items: center; gap: .7rem; padding: .6rem 1.5rem; font-size: .82rem; color: #666; cursor: pointer; transition: all .15s; border-left: 2px solid transparent; text-decoration: none; }
   .nav-item:hover { color: #ccc; background: #111; }
-
-  .nav-item.active {
-    color: #fff;
-    background: #111;
-    border-left-color: #fff;
-  }
-
+  .nav-item.active { color: #fff; background: #111; border-left-color: #fff; }
   .nav-item svg { width: 14px; height: 14px; flex-shrink: 0; opacity: .7; }
   .nav-item.active svg { opacity: 1; }
-
-  .sidebar-footer {
-    padding: 1rem 1.5rem;
-    border-top: 1px solid #1c1c1c;
-  }
-
-  .logout-btn {
-    font-size: .78rem;
-    color: #444;
-    cursor: pointer;
-    transition: color .2s;
-    background: none;
-    border: none;
-    font-family: 'Inter', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-  }
-
+  .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid #1c1c1c; }
+  .logout-btn { font-size: .78rem; color: #444; cursor: pointer; transition: color .2s; background: none; border: none; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: .5rem; }
   .logout-btn:hover { color: #999; }
 
   /* ─── MAIN ─── */
-  .main {
-    margin-left: var(--sidebar);
-    flex: 1;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+  .main { margin-left: var(--sidebar); flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
 
   /* ─── TOPBAR ─── */
-  .topbar {
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 40;
-  }
-
-  .topbar-title {
-    font-size: .95rem;
-    font-weight: 600;
-  }
-
+  .topbar { background: #fff; border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 40; }
+  .topbar-left { display: flex; align-items: center; gap: 1rem; }
+  .topbar-title { font-size: .95rem; font-weight: 600; }
+  .topbar-breadcrumb { font-size: .78rem; color: var(--gray); }
   .topbar-actions { display: flex; gap: .6rem; align-items: center; }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    font-family: 'Inter', sans-serif;
-    font-size: .78rem;
-    font-weight: 500;
-    padding: .5rem 1rem;
-    cursor: pointer;
-    transition: all .15s;
-    border: none;
-  }
-
-  .btn-primary {
-    background: var(--black);
-    color: #fff;
-  }
-
+  /* ─── BUTTONS ─── */
+  .btn { display: inline-flex; align-items: center; gap: .4rem; font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500; padding: .5rem 1rem; cursor: pointer; transition: all .15s; border: none; }
+  .btn-primary { background: var(--black); color: #fff; }
   .btn-primary:hover { opacity: .85; }
-
-  .btn-secondary {
-    background: #fff;
-    color: var(--black);
-    border: 1px solid var(--border);
-  }
-
+  .btn-secondary { background: #fff; color: var(--black); border: 1px solid var(--border); }
   .btn-secondary:hover { background: var(--bg); }
-
-  .btn-danger {
-    background: var(--red-bg);
-    color: var(--red);
-    border: 1px solid #fecaca;
-  }
-
+  .btn-danger { background: var(--red-bg); color: var(--red); border: 1px solid #fecaca; }
   .btn-danger:hover { background: #fee2e2; }
+  .btn-success { background: var(--green-bg); color: var(--green); border: 1px solid #bbf7d0; }
+  .btn-success:hover { background: #dcfce7; }
 
   /* ─── CONTENT ─── */
-  .content {
-    padding: 2rem;
-    flex: 1;
-  }
-
-  /* ─── VIEWS ─── */
+  .content { padding: 2rem; flex: 1; }
   .view { display: none; }
   .view.active { display: block; }
 
   /* ─── STATS ─── */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .stat-card {
-    background: #fff;
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-  }
-
-  .stat-label {
-    font-size: .7rem;
-    font-weight: 500;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: .6rem;
-  }
-
-  .stat-value {
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 1;
-    margin-bottom: .3rem;
-  }
-
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card { background: #fff; border: 1px solid var(--border); padding: 1.5rem; }
+  .stat-label { font-size: .7rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--gray); margin-bottom: .6rem; }
+  .stat-value { font-size: 2rem; font-weight: 600; line-height: 1; margin-bottom: .3rem; }
   .stat-sub { font-size: .75rem; color: var(--gray); }
 
   /* ─── TABLE ─── */
-  .table-wrap {
-    background: #fff;
-    border: 1px solid var(--border);
-    overflow: hidden;
-  }
-
-  .table-header {
-    padding: 1.2rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
+  .table-wrap { background: #fff; border: 1px solid var(--border); overflow: hidden; }
+  .table-header { padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
   .table-title { font-size: .88rem; font-weight: 600; }
-
-  .search-input {
-    padding: .4rem .8rem;
-    border: 1px solid var(--border);
-    font-family: 'Inter', sans-serif;
-    font-size: .78rem;
-    color: var(--black);
-    outline: none;
-    width: 200px;
-    transition: border-color .2s;
-    background: var(--bg);
-  }
-
+  .table-filters { display: flex; gap: .5rem; align-items: center; }
+  .search-input { padding: .4rem .8rem; border: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .78rem; color: var(--black); outline: none; width: 200px; transition: border-color .2s; background: var(--bg); }
   .search-input:focus { border-color: var(--black); background: #fff; }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  thead th {
-    text-align: left;
-    font-size: .68rem;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--gray);
-    padding: .8rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg);
-  }
-
-  tbody tr {
-    border-bottom: 1px solid var(--border);
-    transition: background .15s;
-    cursor: pointer;
-  }
-
+  .filter-select { padding: .4rem .8rem; border: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .78rem; background: var(--bg); outline: none; cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { text-align: left; font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gray); padding: .8rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--bg); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; cursor: pointer; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: var(--bg); }
-
-  td {
-    padding: 1rem 1.5rem;
-    font-size: .82rem;
-    color: var(--black);
-    vertical-align: middle;
-  }
-
+  td { padding: 1rem 1.5rem; font-size: .82rem; color: var(--black); vertical-align: middle; }
   .td-title { font-weight: 500; }
-
-  .td-actions {
-    display: flex;
-    gap: .4rem;
-    justify-content: flex-end;
-  }
-
-  .action-btn {
-    padding: .3rem .7rem;
-    font-family: 'Inter', sans-serif;
-    font-size: .72rem;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: #fff;
-    color: var(--gray2);
-    transition: all .15s;
-  }
-
+  .td-actions { display: flex; gap: .4rem; justify-content: flex-end; }
+  .action-btn { padding: .3rem .7rem; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: #fff; color: var(--gray2); transition: all .15s; }
   .action-btn:hover { background: var(--bg); color: var(--black); }
-
   .action-btn.danger { color: var(--red); border-color: #fecaca; background: var(--red-bg); }
   .action-btn.danger:hover { background: #fee2e2; }
 
-  /* ─── STATUS BADGE ─── */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: .3rem;
-    font-size: .68rem;
-    font-weight: 600;
-    padding: .2rem .6rem;
-    border-radius: 999px;
-  }
-
-  .badge::before {
-    content: '';
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-
+  /* ─── BADGE ─── */
+  .badge { display: inline-flex; align-items: center; gap: .3rem; font-size: .68rem; font-weight: 600; padding: .2rem .6rem; border-radius: 999px; }
+  .badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
   .badge-published { background: var(--green-bg); color: var(--green); }
   .badge-draft { background: var(--yellow-bg); color: var(--yellow); }
 
   /* ─── EDITOR ─── */
-  .editor-layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 1.5rem;
-    align-items: start;
-  }
-
+  .editor-layout { display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; align-items: start; }
   .editor-main { display: flex; flex-direction: column; gap: 1rem; }
-
-  .editor-card {
-    background: #fff;
-    border: 1px solid var(--border);
-    overflow: hidden;
-  }
-
-  .editor-card-header {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .editor-card-title {
-    font-size: .82rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-  }
-
+  .editor-card { background: #fff; border: 1px solid var(--border); overflow: hidden; }
+  .editor-card-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .editor-card-title { font-size: .82rem; font-weight: 600; display: flex; align-items: center; gap: .5rem; }
   .editor-card-title svg { width: 14px; height: 14px; color: var(--gray); }
-
-  .card-toggle {
-    font-size: .72rem;
-    color: var(--gray);
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-family: 'Inter', sans-serif;
-  }
-
   .editor-card-body { padding: 1.5rem; }
-
-  .field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .field {
-    margin-bottom: 1rem;
-  }
-
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field { margin-bottom: 1rem; }
   .field:last-child { margin-bottom: 0; }
-
-  .field label {
-    display: block;
-    font-size: .7rem;
-    font-weight: 500;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    color: var(--gray2);
-    margin-bottom: .4rem;
-  }
-
-  .field input,
-  .field textarea,
-  .field select {
-    width: 100%;
-    padding: .6rem .8rem;
-    border: 1px solid var(--border);
-    font-family: 'Inter', sans-serif;
-    font-size: .82rem;
-    color: var(--black);
-    outline: none;
-    transition: border-color .2s;
-    background: #fff;
-    appearance: none;
-  }
-
-  .field input:focus,
-  .field textarea:focus,
-  .field select:focus { border-color: var(--black); }
-
+  .field label { display: block; font-size: .7rem; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--gray2); margin-bottom: .4rem; }
+  .field input, .field textarea, .field select { width: 100%; padding: .6rem .8rem; border: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .82rem; color: var(--black); outline: none; transition: border-color .2s; background: #fff; appearance: none; }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--black); }
   .field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
 
-  /* Upload de imagem */
-  .img-upload {
-    border: 2px dashed var(--border);
-    padding: 2rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all .2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .img-upload:hover { border-color: var(--black); background: var(--bg); }
-
-  .img-upload input[type="file"] {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-  }
-
-  .img-upload-icon { font-size: 1.5rem; margin-bottom: .5rem; color: var(--gray); }
+  /* ─── UPLOAD ─── */
+  .img-upload { border: 2px dashed var(--border); padding: 1.5rem; text-align: center; cursor: pointer; transition: all .2s; position: relative; overflow: hidden; background: var(--bg); }
+  .img-upload:hover { border-color: var(--black); background: #f0f0ee; }
+  .img-upload input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .img-upload-icon { font-size: 1.3rem; margin-bottom: .4rem; color: var(--gray); }
   .img-upload-text { font-size: .78rem; color: var(--gray); }
   .img-upload-text strong { color: var(--black); }
+  .img-preview { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: none; margin-bottom: .5rem; border: 1px solid var(--border); }
+  .img-preview-wrap { position: relative; }
+  .img-preview-remove { position: absolute; top: .5rem; right: .5rem; background: rgba(0,0,0,.7); color: #fff; border: none; font-size: .7rem; padding: .3rem .6rem; cursor: pointer; font-family: 'Inter', sans-serif; }
 
-  .img-preview {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    display: none;
-    margin-bottom: .5rem;
-  }
+  /* ─── GALERIA PREVIEW ─── */
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin-top: .8rem; }
+  .gallery-thumb { aspect-ratio: 1; object-fit: cover; border: 1px solid var(--border); position: relative; }
+  .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-thumb-remove { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,.7); color: #fff; border: none; font-size: .6rem; width: 16px; height: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-  /* Bloco de seção editorial */
-  .section-block {
-    border: 1px solid var(--border);
-    margin-bottom: .8rem;
-    overflow: hidden;
-  }
-
-  .section-block-header {
-    padding: .8rem 1rem;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-  }
-
-  .section-block-title {
-    font-size: .78rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-  }
-
-  .section-num {
-    width: 20px;
-    height: 20px;
-    background: var(--black);
-    color: #fff;
-    font-size: .6rem;
-    font-weight: 700;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
+  /* ─── SEÇÕES DINÂMICAS ─── */
+  .section-block { border: 1px solid var(--border); margin-bottom: .6rem; overflow: hidden; transition: opacity .2s; }
+  .section-block.disabled { opacity: .4; }
+  .section-block-header { padding: .8rem 1rem; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; user-select: none; }
+  .section-block-title { font-size: .8rem; font-weight: 600; display: flex; align-items: center; gap: .5rem; }
+  .section-num { width: 20px; height: 20px; background: var(--black); color: #fff; font-size: .6rem; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-block.disabled .section-num { background: var(--gray); }
   .section-block-body { padding: 1rem; display: none; }
   .section-block-body.open { display: block; }
+  .section-controls { display: flex; align-items: center; gap: .4rem; }
+  .drag-handle { cursor: grab; color: var(--gray); font-size: .9rem; padding: .2rem; }
+  .drag-handle:active { cursor: grabbing; }
+  .section-keep-toggle { font-size: .68rem; font-weight: 600; cursor: pointer; padding: .2rem .6rem; border-radius: 999px; border: 1px solid #bbf7d0; background: var(--green-bg); color: var(--green); transition: all .2s; }
+  .section-keep-toggle.excluded { color: var(--red); background: var(--red-bg); border-color: #fecaca; }
+  .section-toggle-arrow { font-size: .7rem; color: var(--gray); cursor: pointer; padding: .2rem .4rem; }
 
-  /* Sidebar do editor */
-  .editor-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+  /* ─── BOTÕES DE SEÇÃO ─── */
+  .generate-btn { display: block; width: 100%; margin-top: .6rem; padding: .7rem; background: var(--black); color: #fff; font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500; border: none; cursor: pointer; transition: opacity .2s; }
+  .generate-btn:hover { opacity: .85; }
+  .add-section-btn { width: 100%; padding: .7rem; border: 2px dashed var(--border); background: transparent; font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500; color: var(--gray); cursor: pointer; transition: all .2s; margin-top: .4rem; }
+  .add-section-btn:hover { border-color: var(--black); color: var(--black); background: var(--bg); }
 
-  .sidebar-card {
-    background: #fff;
-    border: 1px solid var(--border);
-  }
+  /* ─── OPTIONAL IMAGE TOGGLE ─── */
+  .img-toggle-row { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
+  .img-toggle-row input[type="checkbox"] { width: 14px; height: 14px; cursor: pointer; }
+  .img-toggle-row label { font-size: .7rem; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--gray2); cursor: pointer; margin: 0; }
 
-  .sidebar-card-header {
-    padding: .8rem 1rem;
-    border-bottom: 1px solid var(--border);
-    font-size: .78rem;
-    font-weight: 600;
-  }
-
+  /* ─── EDITOR SIDEBAR ─── */
+  .editor-sidebar { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 72px; }
+  .sidebar-card { background: #fff; border: 1px solid var(--border); }
+  .sidebar-card-header { padding: .8rem 1rem; border-bottom: 1px solid var(--border); font-size: .78rem; font-weight: 600; }
   .sidebar-card-body { padding: 1rem; }
-
-  .status-select {
-    width: 100%;
-    padding: .5rem .8rem;
-    border: 1px solid var(--border);
-    font-family: 'Inter', sans-serif;
-    font-size: .82rem;
-    cursor: pointer;
-    background: #fff;
-    outline: none;
-  }
-
-  .publish-btn {
-    width: 100%;
-    padding: .7rem;
-    background: var(--black);
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: .82rem;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-    margin-top: .8rem;
-    transition: opacity .2s;
-  }
-
+  .publish-btn { width: 100%; padding: .7rem; background: var(--black); color: #fff; font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 500; border: none; cursor: pointer; margin-top: .8rem; transition: opacity .2s; }
   .publish-btn:hover { opacity: .85; }
-
-  .preview-btn {
-    width: 100%;
-    padding: .7rem;
-    background: #fff;
-    color: var(--black);
-    font-family: 'Inter', sans-serif;
-    font-size: .82rem;
-    font-weight: 500;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    margin-top: .5rem;
-    transition: background .2s;
-  }
-
+  .preview-btn { width: 100%; padding: .7rem; background: #fff; color: var(--black); font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 500; border: 1px solid var(--border); cursor: pointer; margin-top: .5rem; transition: background .2s; }
   .preview-btn:hover { background: var(--bg); }
 
+  /* ─── CHECKLIST ─── */
   .checklist { display: flex; flex-direction: column; gap: .5rem; }
-
-  .check-item {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    font-size: .75rem;
-    color: var(--gray);
-  }
-
+  .check-item { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: var(--gray); }
   .check-item.done { color: var(--green); }
-
-  .check-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-    flex-shrink: 0;
-  }
-
+  .check-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
   .check-item.done .check-dot { background: var(--green); }
 
-  .generate-btn {
-    display: block;
-    width: 100%;
-    margin-top: .6rem;
-    padding: .7rem;
-    background: var(--black);
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: .78rem;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-    transition: opacity .2s;
-    text-align: center;
-  }
+  /* ─── HISTÓRICO ─── */
+  .history-list { display: flex; flex-direction: column; gap: .6rem; }
+  .history-item { display: flex; gap: .6rem; font-size: .75rem; }
+  .history-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); flex-shrink: 0; margin-top: .3rem; }
+  .history-item.recent .history-dot { background: var(--green); }
+  .history-text { color: var(--gray2); line-height: 1.5; }
+  .history-time { color: var(--gray); font-size: .68rem; }
 
-  .generate-btn:hover { opacity: .85; }
+  /* ─── GESTÃO DE USUÁRIOS ─── */
+  .users-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  .user-card { background: #fff; border: 1px solid var(--border); padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .user-card-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--black); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; flex-shrink: 0; }
+  .user-card-info { flex: 1; }
+  .user-card-name { font-size: .88rem; font-weight: 600; margin-bottom: .2rem; }
+  .user-card-email { font-size: .75rem; color: var(--gray); margin-bottom: .6rem; }
+  .user-card-actions { display: flex; gap: .4rem; }
+  .role-badge { font-size: .65rem; font-weight: 600; padding: .15rem .5rem; border-radius: 999px; }
+  .role-admin { background: #fef3c7; color: #92400e; }
+  .role-editor { background: var(--blue-bg); color: var(--blue); }
 
-  .section-block.disabled {
-    opacity: .45;
-  }
+  /* ─── MODAL ─── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; display: none; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #fff; padding: 2rem; max-width: 440px; width: 90%; }
+  .modal-title { font-size: .95rem; font-weight: 600; margin-bottom: .5rem; }
+  .modal-desc { font-size: .82rem; color: var(--gray); margin-bottom: 1.5rem; }
+  .modal-actions { display: flex; gap: .6rem; justify-content: flex-end; }
 
-  .section-keep-toggle {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    font-size: .7rem;
-    font-weight: 500;
-    color: var(--green);
-    cursor: pointer;
-    padding: .2rem .6rem;
-    background: var(--green-bg);
-    border: 1px solid #bbf7d0;
-    border-radius: 999px;
-    transition: all .2s;
-  }
+  /* ─── PREVIEW MODAL ─── */
+  .preview-modal { max-width: 900px; width: 95%; padding: 0; overflow: hidden; }
+  .preview-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .preview-header h3 { font-size: .88rem; font-weight: 600; }
+  .preview-close { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--gray); }
+  .preview-body { padding: 2rem; max-height: 70vh; overflow-y: auto; background: var(--bg); }
+  .preview-case { background: #fff; padding: 2rem; }
+  .preview-meta { display: flex; gap: 3rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .preview-meta-item label { display: block; font-size: .58rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gray); margin-bottom: .2rem; }
+  .preview-meta-item span { font-size: .85rem; font-weight: 500; }
+  .preview-title { font-size: 1.8rem; font-weight: 700; line-height: 1.1; margin-bottom: 1rem; }
+  .preview-text { font-size: .88rem; line-height: 1.8; color: #444; margin-bottom: .8rem; }
+  .preview-section { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .preview-section-step { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gray); margin-bottom: .5rem; }
+  .preview-section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: .8rem; }
 
-  .section-keep-toggle.excluded {
-    color: var(--red);
-    background: var(--red-bg);
-    border-color: #fecaca;
-  }
-
-  .add-section-btn {
-    width: 100%;
-    padding: .8rem;
-    border: 2px dashed var(--border);
-    background: transparent;
-    font-family: 'Inter', sans-serif;
-    font-size: .8rem;
-    font-weight: 500;
-    color: var(--gray);
-    cursor: pointer;
-    transition: all .2s;
-    margin-top: .5rem;
-  }
-
-  .add-section-btn:hover {
-    border-color: var(--black);
-    color: var(--black);
-    background: var(--bg);
-  }
-
-  .section-remove-btn {
-    background: none;
-    border: none;
-    font-size: .7rem;
-    color: var(--red);
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    padding: .2rem .5rem;
-    transition: opacity .2s;
-  }
-
-  .section-remove-btn:hover { opacity: .7; }
+  /* ─── USER FORM MODAL ─── */
+  .user-modal { max-width: 460px; }
 
   /* ─── TOAST ─── */
-  .toast {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: var(--black);
-    color: #fff;
-    padding: .8rem 1.5rem;
-    font-size: .82rem;
-    font-weight: 500;
-    z-index: 999;
-    transform: translateY(10px);
-    opacity: 0;
-    transition: all .3s;
-    pointer-events: none;
-  }
-
+  .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--black); color: #fff; padding: .8rem 1.5rem; font-size: .82rem; font-weight: 500; z-index: 999; transform: translateY(10px); opacity: 0; transition: all .3s; pointer-events: none; display: flex; align-items: center; gap: .6rem; }
   .toast.show { transform: none; opacity: 1; }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--red); }
 
-  /* ─── EMPTY STATE ─── */
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--gray);
-  }
-
+  /* ─── EMPTY ─── */
+  .empty-state { text-align: center; padding: 4rem 2rem; color: var(--gray); }
   .empty-icon { font-size: 2.5rem; margin-bottom: 1rem; }
   .empty-title { font-size: .95rem; font-weight: 500; color: var(--black); margin-bottom: .4rem; }
   .empty-desc { font-size: .82rem; }
 
-  /* ─── CONFIRM MODAL ─── */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.5);
-    z-index: 200;
-    display: none;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: #fff;
-    padding: 2rem;
-    max-width: 400px;
-    width: 90%;
-  }
-
-  .modal-title { font-size: .95rem; font-weight: 600; margin-bottom: .5rem; }
-  .modal-desc { font-size: .82rem; color: var(--gray); margin-bottom: 1.5rem; }
-  .modal-actions { display: flex; gap: .6rem; justify-content: flex-end; }
+  /* ─── DRAG AND DROP ─── */
+  .section-block.dragging { opacity: .4; border: 2px dashed var(--black); }
+  .section-block.drag-over { border-top: 2px solid var(--black); }
 </style>
 </head>
 <body>
@@ -828,12 +287,7 @@
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <div class="login-logo">
-      <svg viewBox="0 0 743.9 150" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="690.5 17.9 657.7 106.2 651.9 121.8 646.1 106.2 613.3 17.9 581.2 17.9 581.2 132.1 599.9 132.1 599.9 35.3 635.9 132.1 667.9 132.1 703.9 35.3 703.9 132.1 722.6 132.1 722.6 17.9 690.5 17.9"/>
-        <path d="M473,17.9l-45.4,114.2h20l19.6-49.3,6.3,15.9h43.3l13.3,33.4h20l-45.4-114.2h-31.6ZM467.1,82.7l21.6-54.4,21.6,54.4h-43.2Z"/>
-        <polygon points="364.2 17.9 325.6 121.8 287 17.9 254.9 17.9 254.9 132.1 273.7 132.1 273.7 35.3 309.7 132.1 341.6 132.1 377.6 35.3 377.6 132.1 396.3 132.1 396.3 17.9 364.2 17.9"/>
-        <path d="M92,61.9L46.9,18h-25.7v114.1h25.7l31.6-30.9v-26.2l6.9,6.7h0s51.6,50.3,51.6,50.3h25.7V18h-25.7l-45.1,43.9ZM40,112.6V37.4l38.5,37.6-38.5,37.6ZM144,112.6l-38.5-37.6,38.5-37.6v75.2Z"/>
-      </svg>
+      <svg viewBox="0 0 743.9 150" xmlns="http://www.w3.org/2000/svg"><polygon points="690.5 17.9 657.7 106.2 651.9 121.8 646.1 106.2 613.3 17.9 581.2 17.9 581.2 132.1 599.9 132.1 599.9 35.3 635.9 132.1 667.9 132.1 703.9 35.3 703.9 132.1 722.6 132.1 722.6 17.9 690.5 17.9"/><path d="M473,17.9l-45.4,114.2h20l19.6-49.3,6.3,15.9h43.3l13.3,33.4h20l-45.4-114.2h-31.6ZM467.1,82.7l21.6-54.4,21.6,54.4h-43.2Z"/><polygon points="364.2 17.9 325.6 121.8 287 17.9 254.9 17.9 254.9 132.1 273.7 132.1 273.7 35.3 309.7 132.1 341.6 132.1 377.6 35.3 377.6 132.1 396.3 132.1 396.3 17.9 364.2 17.9"/><path d="M92,61.9L46.9,18h-25.7v114.1h25.7l31.6-30.9v-26.2l6.9,6.7h0s51.6,50.3,51.6,50.3h25.7V18h-25.7l-45.1,43.9ZM40,112.6V37.4l38.5,37.6-38.5,37.6ZM144,112.6l-38.5-37.6,38.5-37.6v75.2Z"/></svg>
     </div>
     <p class="login-title">Painel Administrativo</p>
     <p class="login-sub">Entre com suas credenciais para continuar.</p>
@@ -852,86 +306,61 @@
 
 <!-- APP -->
 <div class="app" id="app">
-
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo">
-        <svg viewBox="0 0 743.9 150" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="690.5 17.9 657.7 106.2 651.9 121.8 646.1 106.2 613.3 17.9 581.2 17.9 581.2 132.1 599.9 132.1 599.9 35.3 635.9 132.1 667.9 132.1 703.9 35.3 703.9 132.1 722.6 132.1 722.6 17.9 690.5 17.9"/>
-          <path d="M473,17.9l-45.4,114.2h20l19.6-49.3,6.3,15.9h43.3l13.3,33.4h20l-45.4-114.2h-31.6ZM467.1,82.7l21.6-54.4,21.6,54.4h-43.2Z"/>
-          <polygon points="364.2 17.9 325.6 121.8 287 17.9 254.9 17.9 254.9 132.1 273.7 132.1 273.7 35.3 309.7 132.1 341.6 132.1 377.6 35.3 377.6 132.1 396.3 132.1 396.3 17.9 364.2 17.9"/>
-          <path d="M92,61.9L46.9,18h-25.7v114.1h25.7l31.6-30.9v-26.2l6.9,6.7h0s51.6,50.3,51.6,50.3h25.7V18h-25.7l-45.1,43.9ZM40,112.6V37.4l38.5,37.6-38.5,37.6ZM144,112.6l-38.5-37.6,38.5-37.6v75.2Z"/>
-        </svg>
+        <svg viewBox="0 0 743.9 150" xmlns="http://www.w3.org/2000/svg"><polygon points="690.5 17.9 657.7 106.2 651.9 121.8 646.1 106.2 613.3 17.9 581.2 17.9 581.2 132.1 599.9 132.1 599.9 35.3 635.9 132.1 667.9 132.1 703.9 35.3 703.9 132.1 722.6 132.1 722.6 17.9 690.5 17.9"/><path d="M473,17.9l-45.4,114.2h20l19.6-49.3,6.3,15.9h43.3l13.3,33.4h20l-45.4-114.2h-31.6ZM467.1,82.7l21.6-54.4,21.6,54.4h-43.2Z"/><polygon points="364.2 17.9 325.6 121.8 287 17.9 254.9 17.9 254.9 132.1 273.7 132.1 273.7 35.3 309.7 132.1 341.6 132.1 377.6 35.3 377.6 132.1 396.3 132.1 396.3 17.9 364.2 17.9"/><path d="M92,61.9L46.9,18h-25.7v114.1h25.7l31.6-30.9v-26.2l6.9,6.7h0s51.6,50.3,51.6,50.3h25.7V18h-25.7l-45.1,43.9ZM40,112.6V37.4l38.5,37.6-38.5,37.6ZM144,112.6l-38.5-37.6,38.5-37.6v75.2Z"/></svg>
       </div>
     </div>
     <div class="sidebar-user">
       <div class="user-avatar" id="userAvatar">AD</div>
       <div class="user-info">
         <div class="user-name" id="userName">Admin</div>
-        <div class="user-role">Editor</div>
+        <div class="user-role" id="userRoleDisplay">Editor</div>
       </div>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-title">Menu</div>
       <a class="nav-item active" onclick="showView('dashboard')" href="#">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Dashboard
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard
       </a>
       <a class="nav-item" onclick="showView('cases')" href="#">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Cases / Projetos
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Cases / Projetos
       </a>
       <a class="nav-item" onclick="showView('newCase')" href="#">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-        Novo Case
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Novo Case
+      </a>
+      <div class="nav-section-title" style="margin-top:.5rem">Configurações</div>
+      <a class="nav-item" onclick="showView('users')" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Usuários
       </a>
     </nav>
     <div class="sidebar-footer">
       <button class="logout-btn" onclick="doLogout()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Sair
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair
       </button>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main">
-
-    <!-- TOPBAR -->
     <div class="topbar">
-      <span class="topbar-title" id="topbarTitle">Dashboard</span>
+      <div class="topbar-left">
+        <span class="topbar-title" id="topbarTitle">Dashboard</span>
+        <span class="topbar-breadcrumb" id="topbarBreadcrumb"></span>
+      </div>
       <div class="topbar-actions" id="topbarActions"></div>
     </div>
 
-    <!-- CONTENT -->
     <div class="content">
 
       <!-- DASHBOARD -->
       <div class="view active" id="view-dashboard">
         <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-label">Total de Cases</div>
-            <div class="stat-value" id="statTotal">0</div>
-            <div class="stat-sub">projetos cadastrados</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Publicados</div>
-            <div class="stat-value" id="statPublished">0</div>
-            <div class="stat-sub">visíveis no site</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Rascunhos</div>
-            <div class="stat-value" id="statDraft">0</div>
-            <div class="stat-sub">aguardando revisão</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Último update</div>
-            <div class="stat-value" style="font-size:1.2rem" id="statDate">—</div>
-            <div class="stat-sub">modificação recente</div>
-          </div>
+          <div class="stat-card"><div class="stat-label">Total de Cases</div><div class="stat-value" id="statTotal">0</div><div class="stat-sub">projetos cadastrados</div></div>
+          <div class="stat-card"><div class="stat-label">Publicados</div><div class="stat-value" id="statPublished">0</div><div class="stat-sub">visíveis no site</div></div>
+          <div class="stat-card"><div class="stat-label">Rascunhos</div><div class="stat-value" id="statDraft">0</div><div class="stat-sub">aguardando revisão</div></div>
+          <div class="stat-card"><div class="stat-label">Último update</div><div class="stat-value" style="font-size:1.2rem" id="statDate">—</div><div class="stat-sub">modificação recente</div></div>
         </div>
-
         <div class="table-wrap">
           <div class="table-header">
             <span class="table-title">Cases recentes</span>
@@ -946,8 +375,13 @@
         <div class="table-wrap">
           <div class="table-header">
             <span class="table-title">Todos os cases</span>
-            <div style="display:flex;gap:.6rem;align-items:center">
-              <input class="search-input" type="text" placeholder="Buscar case..." oninput="filterCases(this.value)">
+            <div class="table-filters">
+              <input class="search-input" type="text" placeholder="Buscar..." oninput="filterCases(this.value)">
+              <select class="filter-select" onchange="filterByStatus(this.value)">
+                <option value="">Todos os status</option>
+                <option value="published">Publicados</option>
+                <option value="draft">Rascunhos</option>
+              </select>
               <button class="btn btn-primary" onclick="showView('newCase')">+ Novo case</button>
             </div>
           </div>
@@ -955,11 +389,9 @@
         </div>
       </div>
 
-      <!-- EDITOR DE CASE -->
+      <!-- EDITOR -->
       <div class="view" id="view-newCase">
         <div class="editor-layout">
-
-          <!-- COLUNA PRINCIPAL -->
           <div class="editor-main">
 
             <!-- DADOS BÁSICOS -->
@@ -971,14 +403,11 @@
                 </span>
               </div>
               <div class="editor-card-body">
-                <div class="field">
-                  <label>Nome do Cliente / Case *</label>
-                  <input type="text" id="f_client" placeholder="Ex: GoMee" oninput="updateChecklist()">
-                </div>
+                <div class="field"><label>Nome do Cliente / Case *</label><input type="text" id="f_client" placeholder="Ex: GoMee" oninput="updateChecklist()"></div>
                 <div class="field-row">
                   <div class="field">
                     <label>Serviço *</label>
-                    <select id="f_service">
+                    <select id="f_service" onchange="updateChecklist()">
                       <option value="">Selecionar...</option>
                       <option>Branding Completo</option>
                       <option>Rebranding</option>
@@ -988,18 +417,12 @@
                       <option>Personal Brand</option>
                     </select>
                   </div>
-                  <div class="field">
-                    <label>Setor *</label>
-                    <input type="text" id="f_sector" placeholder="Ex: Suplementação" oninput="updateChecklist()">
-                  </div>
+                  <div class="field"><label>Setor *</label><input type="text" id="f_sector" placeholder="Ex: Suplementação" oninput="updateChecklist()"></div>
                 </div>
                 <div class="field-row">
+                  <div class="field"><label>Ano</label><input type="text" id="f_year" placeholder="Ex: 2024"></div>
                   <div class="field">
-                    <label>Ano</label>
-                    <input type="text" id="f_year" placeholder="Ex: 2024">
-                  </div>
-                  <div class="field">
-                    <label>Categoria (para filtro)</label>
+                    <label>Categoria (filtro)</label>
                     <select id="f_category">
                       <option value="">Selecionar...</option>
                       <option value="branding">Branding</option>
@@ -1012,7 +435,7 @@
               </div>
             </div>
 
-            <!-- IMAGEM HERO -->
+            <!-- HERO -->
             <div class="editor-card">
               <div class="editor-card-header">
                 <span class="editor-card-title">
@@ -1021,9 +444,12 @@
                 </span>
               </div>
               <div class="editor-card-body">
-                <img id="heroPreview" class="img-preview">
+                <div class="img-preview-wrap">
+                  <img id="heroPreview" class="img-preview">
+                  <button class="img-preview-remove" id="heroRemove" style="display:none" onclick="removeHero()">✕ Remover</button>
+                </div>
                 <div class="img-upload" id="heroUpload">
-                  <input type="file" accept="image/*" onchange="previewImage(this, 'heroPreview', 'heroUpload')">
+                  <input type="file" accept="image/*" onchange="previewImage(this,'heroPreview','heroUpload','heroRemove')">
                   <div class="img-upload-icon">🖼</div>
                   <div class="img-upload-text"><strong>Clique para fazer upload</strong> ou arraste aqui<br><span style="font-size:.72rem;color:#bbb">PNG, JPG, WEBP — Recomendado: 2400×1200px</span></div>
                 </div>
@@ -1039,27 +465,18 @@
                 </span>
               </div>
               <div class="editor-card-body">
-                <div class="field">
-                  <label>Título principal *</label>
-                  <input type="text" id="f_introTitle" placeholder="Ex: Uma marca criada para dominar o mercado" oninput="updateChecklist()">
-                </div>
-                <div class="field">
-                  <label>Parágrafo 1</label>
-                  <textarea id="f_introP1" placeholder="Contexto e desafio do projeto..."></textarea>
-                </div>
-                <div class="field">
-                  <label>Parágrafo 2</label>
-                  <textarea id="f_introP2" placeholder="Abordagem e solução..."></textarea>
-                </div>
+                <div class="field"><label>Título principal *</label><input type="text" id="f_introTitle" placeholder="Ex: Uma marca criada para dominar o mercado" oninput="updateChecklist()"></div>
+                <div class="field"><label>Parágrafo 1</label><textarea id="f_introP1" placeholder="Contexto e desafio do projeto..."></textarea></div>
+                <div class="field"><label>Parágrafo 2</label><textarea id="f_introP2" placeholder="Abordagem e solução..."></textarea></div>
                 <div class="field">
                   <label>Entregáveis (um por linha)</label>
-                  <textarea id="f_deliverables" placeholder="Nome de Marca&#10;Estratégia de Marca&#10;Direção Criativa&#10;Identidade Visual&#10;Design de Embalagem" rows="6"></textarea>
+                  <textarea id="f_deliverables" rows="6" placeholder="Nome de Marca&#10;Estratégia de Marca&#10;Direção Criativa&#10;Identidade Visual&#10;Design de Embalagem"></textarea>
                   <button type="button" class="generate-btn" onclick="generateSections()">↓ Gerar seções a partir dos entregáveis</button>
                 </div>
               </div>
             </div>
 
-            <!-- SEÇÕES EDITORIAIS -->
+            <!-- SEÇÕES -->
             <div class="editor-card">
               <div class="editor-card-header">
                 <span class="editor-card-title">
@@ -1067,11 +484,9 @@
                   Seções do Projeto <span id="sectionCount" style="font-size:.7rem;font-weight:400;color:var(--gray);margin-left:.3rem"></span>
                 </span>
               </div>
-              <div class="editor-card-body" id="sectionsContainer">
-
+              <div class="editor-card-body">
                 <div id="dynamicSections"></div>
-                <button type="button" class="add-section-btn" onclick="addSection()">+ Adicionar seção</button>
-
+                <button type="button" class="add-section-btn" onclick="addSection()">+ Adicionar seção manualmente</button>
               </div>
             </div>
 
@@ -1084,11 +499,12 @@
                 </span>
               </div>
               <div class="editor-card-body">
-                <div class="img-upload">
-                  <input type="file" accept="image/*" multiple>
+                <div class="img-upload" id="galleryUpload">
+                  <input type="file" accept="image/*" multiple onchange="previewGallery(this)">
                   <div class="img-upload-icon">🖼</div>
                   <div class="img-upload-text"><strong>Selecione múltiplas imagens</strong> para a galeria<br><span style="font-size:.72rem;color:#bbb">As imagens serão exibidas em grid no case</span></div>
                 </div>
+                <div class="gallery-grid" id="galleryGrid"></div>
               </div>
             </div>
 
@@ -1101,10 +517,7 @@
                 </span>
               </div>
               <div class="editor-card-body">
-                <div class="field">
-                  <label>Nome do próximo case</label>
-                  <input type="text" id="f_nextCase" placeholder="Ex: Âmbar Tobacco">
-                </div>
+                <div class="field"><label>Nome do próximo case</label><input type="text" id="f_nextCase" placeholder="Ex: Âmbar Tobacco"></div>
               </div>
             </div>
 
@@ -1112,41 +525,40 @@
 
           <!-- SIDEBAR DO EDITOR -->
           <div class="editor-sidebar">
-
             <div class="sidebar-card">
               <div class="sidebar-card-header">Publicação</div>
               <div class="sidebar-card-body">
                 <div class="field">
                   <label>Status</label>
-                  <select class="status-select" id="f_status">
+                  <select id="f_status">
                     <option value="draft">Rascunho</option>
                     <option value="published">Publicado</option>
                   </select>
                 </div>
                 <button class="publish-btn" onclick="saveCase()">Salvar case</button>
-                <button class="preview-btn" onclick="showToast('Preview em breve disponível')">Visualizar preview</button>
+                <button class="preview-btn" onclick="openPreview()">Visualizar preview</button>
               </div>
             </div>
 
             <div class="sidebar-card">
               <div class="sidebar-card-header">Checklist</div>
               <div class="sidebar-card-body">
-                <div class="checklist" id="checklist">
-                  <div class="check-item" id="chk_client">
-                    <span class="check-dot"></span> Nome do cliente
-                  </div>
-                  <div class="check-item" id="chk_service">
-                    <span class="check-dot"></span> Serviço definido
-                  </div>
-                  <div class="check-item" id="chk_sector">
-                    <span class="check-dot"></span> Setor preenchido
-                  </div>
-                  <div class="check-item" id="chk_intro">
-                    <span class="check-dot"></span> Título de intro
-                  </div>
-                  <div class="check-item" id="chk_hero">
-                    <span class="check-dot"></span> Imagem hero
-                  </div>
+                <div class="checklist">
+                  <div class="check-item" id="chk_client"><span class="check-dot"></span> Nome do cliente</div>
+                  <div class="check-item" id="chk_service"><span class="check-dot"></span> Serviço definido</div>
+                  <div class="check-item" id="chk_sector"><span class="check-dot"></span> Setor preenchido</div>
+                  <div class="check-item" id="chk_intro"><span class="check-dot"></span> Título de intro</div>
+                  <div class="check-item" id="chk_hero"><span class="check-dot"></span> Imagem hero</div>
+                  <div class="check-item" id="chk_sections"><span class="check-dot"></span> Seções geradas</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sidebar-card-header">Histórico</div>
+              <div class="sidebar-card-body">
+                <div class="history-list" id="historyList">
+                  <div class="empty-state" style="padding:1rem;font-size:.75rem;color:var(--gray)">Nenhuma alteração ainda.</div>
                 </div>
               </div>
             </div>
@@ -1155,70 +567,114 @@
               <div class="sidebar-card-header">Dicas</div>
               <div class="sidebar-card-body">
                 <p style="font-size:.75rem;color:var(--gray);line-height:1.6">
-                  • Imagens em formato landscape (16:9) funcionam melhor no hero.<br><br>
-                  • Mantenha os textos das seções entre 80–150 palavras.<br><br>
-                  • Publique só quando todas as seções estiverem revisadas.
+                  • Imagens em 16:9 funcionam melhor no hero.<br><br>
+                  • Textos das seções: 80–150 palavras.<br><br>
+                  • Publique só após revisar o checklist.
                 </p>
               </div>
             </div>
-
           </div>
         </div>
+      </div>
+
+      <!-- USUÁRIOS -->
+      <div class="view" id="view-users">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+          <div>
+            <h2 style="font-size:.95rem;font-weight:600">Gestão de Usuários</h2>
+            <p style="font-size:.78rem;color:var(--gray);margin-top:.2rem">Gerencie quem tem acesso ao painel</p>
+          </div>
+          <button class="btn btn-primary" onclick="openUserModal()">+ Novo usuário</button>
+        </div>
+        <div class="users-grid" id="usersGrid"></div>
       </div>
 
     </div>
   </main>
 </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<!-- MODAL -->
+<!-- MODAL DELETE -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
     <p class="modal-title">Excluir case?</p>
     <p class="modal-desc">Esta ação não pode ser desfeita. O case será removido permanentemente.</p>
     <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-secondary" onclick="closeModal('deleteModal')">Cancelar</button>
       <button class="btn btn-danger" onclick="confirmDelete()">Excluir</button>
     </div>
   </div>
 </div>
 
+<!-- MODAL USUÁRIO -->
+<div class="modal-overlay" id="userModal">
+  <div class="modal user-modal">
+    <p class="modal-title" id="userModalTitle">Novo Usuário</p>
+    <div class="field"><label>Nome completo</label><input type="text" id="u_name" placeholder="Ex: Maria Silva"></div>
+    <div class="field"><label>Email</label><input type="email" id="u_email" placeholder="maria@mam.com.br"></div>
+    <div class="field"><label>Senha</label><input type="password" id="u_pass" placeholder="Mínimo 6 caracteres"></div>
+    <div class="field">
+      <label>Função</label>
+      <select id="u_role">
+        <option value="editor">Editor</option>
+        <option value="admin">Administrador</option>
+      </select>
+    </div>
+    <div class="modal-actions" style="margin-top:1.5rem">
+      <button class="btn btn-secondary" onclick="closeModal('userModal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveUser()">Salvar usuário</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PREVIEW -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal preview-modal">
+    <div class="preview-header">
+      <h3>Preview do Case</h3>
+      <button class="preview-close" onclick="closeModal('previewModal')">✕</button>
+    </div>
+    <div class="preview-body" id="previewBody"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script>
 // ─── DADOS ───
-const USERS = [
-  { email: 'admin@mam.com.br', pass: 'mam2024', name: 'Admin MAM', role: 'Administrador' },
-  { email: 'editor@mam.com.br', pass: 'editor123', name: 'Editor', role: 'Editor' },
+let USERS = [
+  { id: 1, email: 'admin@mam.com.br', pass: 'mam2024', name: 'Admin MAM', role: 'admin' },
+  { id: 2, email: 'editor@mam.com.br', pass: 'editor123', name: 'Editor MAM', role: 'editor' },
 ];
 
 let cases = [
-  { id: 1, client: 'GoMee', service: 'Branding Completo', sector: 'Suplementação', year: '2024', status: 'published', updatedAt: '2024-11-15' },
-  { id: 2, client: 'Âmbar Tobacco', service: 'Branding', sector: 'Tabacaria Premium', year: '2024', status: 'published', updatedAt: '2024-10-22' },
-  { id: 3, client: 'Laflô', service: 'Identidade Visual', sector: 'Cosméticos', year: '2023', status: 'published', updatedAt: '2023-12-01' },
-  { id: 4, client: 'Mate Loco', service: 'Rebranding', sector: 'Bebidas', year: '2023', status: 'draft', updatedAt: '2023-09-10' },
-  { id: 5, client: 'OP Capital', service: 'Posicionamento', sector: 'Financeiro', year: '2023', status: 'published', updatedAt: '2023-08-05' },
+  { id: 1, client: 'GoMee', service: 'Branding Completo', sector: 'Suplementação', year: '2024', status: 'published', updatedAt: '2024-11-15', updatedBy: 'Admin MAM', introTitle: 'Uma marca criada para dominar o mercado de suplementação', sections: [{name:'Estratégia de Marca',title:'Não basta ser diferente',text:'O posicionamento foi construído ao redor de um insight simples.'},{name:'Identidade Visual',title:'Sistema que funciona em qualquer superfície',text:'Desenvolvemos um sistema visual escalável e consistente.'}] },
+  { id: 2, client: 'Âmbar Tobacco', service: 'Branding', sector: 'Tabacaria Premium', year: '2024', status: 'published', updatedAt: '2024-10-22', updatedBy: 'Editor MAM', introTitle: 'Premium desde o primeiro traço', sections: [] },
+  { id: 3, client: 'Laflô', service: 'Identidade Visual', sector: 'Cosméticos', year: '2023', status: 'published', updatedAt: '2023-12-01', updatedBy: 'Admin MAM', introTitle: 'Beleza com propósito', sections: [] },
+  { id: 4, client: 'Mate Loco', service: 'Rebranding', sector: 'Bebidas', year: '2023', status: 'draft', updatedAt: '2023-09-10', updatedBy: 'Editor MAM', introTitle: 'A bebida que não pede licença', sections: [] },
+  { id: 5, client: 'OP Capital', service: 'Posicionamento', sector: 'Financeiro', year: '2023', status: 'published', updatedAt: '2023-08-05', updatedBy: 'Admin MAM', introTitle: '63% acima do mercado', sections: [] },
 ];
 
 let currentUser = null;
 let deleteTargetId = null;
 let editingId = null;
+let sectionCount = 0;
+let editingUserId = null;
+let caseHistory = [];
 
 // ─── LOGIN ───
 function doLogin() {
   const email = document.getElementById('loginEmail').value;
   const pass = document.getElementById('loginPass').value;
   const user = USERS.find(u => u.email === email && u.pass === pass);
-
   if (user) {
     currentUser = user;
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('app').classList.add('visible');
     document.getElementById('userName').textContent = user.name;
-    document.getElementById('userAvatar').textContent = user.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-    updateStats();
-    renderDashboardTable();
-    renderCasesTable(cases);
+    document.getElementById('userRoleDisplay').textContent = user.role === 'admin' ? 'Administrador' : 'Editor';
+    document.getElementById('userAvatar').textContent = user.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    updateStats(); renderDashboardTable(); renderCasesTable(cases); renderUsers();
   } else {
     document.getElementById('loginError').style.display = 'block';
   }
@@ -1238,16 +694,13 @@ function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
-
-  const titles = { dashboard: 'Dashboard', cases: 'Cases / Projetos', newCase: editingId ? 'Editar Case' : 'Novo Case' };
+  const titles = { dashboard: 'Dashboard', cases: 'Cases / Projetos', newCase: editingId ? 'Editar Case' : 'Novo Case', users: 'Usuários' };
   document.getElementById('topbarTitle').textContent = titles[name] || name;
-
+  document.getElementById('topbarBreadcrumb').textContent = '';
   const actions = { cases: '<button class="btn btn-primary" onclick="showView(\'newCase\')">+ Novo case</button>' };
   document.getElementById('topbarActions').innerHTML = actions[name] || '';
-
-  const navMap = { dashboard: 0, cases: 1, newCase: 2 };
+  const navMap = { dashboard: 0, cases: 1, newCase: 2, users: 3 };
   document.querySelectorAll('.nav-item')[navMap[name]]?.classList.add('active');
-
   if (name === 'newCase' && !editingId) resetForm();
 }
 
@@ -1255,8 +708,7 @@ function showView(name) {
 function updateStats() {
   const published = cases.filter(c => c.status === 'published').length;
   const draft = cases.filter(c => c.status === 'draft').length;
-  const latest = cases.sort((a,b) => b.updatedAt.localeCompare(a.updatedAt))[0];
-
+  const latest = [...cases].sort((a,b) => b.updatedAt.localeCompare(a.updatedAt))[0];
   document.getElementById('statTotal').textContent = cases.length;
   document.getElementById('statPublished').textContent = published;
   document.getElementById('statDraft').textContent = draft;
@@ -1264,8 +716,7 @@ function updateStats() {
 }
 
 function formatDate(str) {
-  const d = new Date(str);
-  return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+  return new Date(str).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
 }
 
 // ─── TABELAS ───
@@ -1274,93 +725,93 @@ function renderTable(data, container) {
     container.innerHTML = '<div class="empty-state"><div class="empty-icon">📁</div><div class="empty-title">Nenhum case encontrado</div><div class="empty-desc">Crie seu primeiro case clicando em "+ Novo case"</div></div>';
     return;
   }
-
-  container.innerHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>Cliente</th>
-          <th>Serviço</th>
-          <th>Setor</th>
-          <th>Ano</th>
-          <th>Status</th>
-          <th>Atualizado</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        ${data.map(c => `
-          <tr onclick="editCase(${c.id})">
-            <td class="td-title">${c.client}</td>
-            <td>${c.service}</td>
-            <td>${c.sector}</td>
-            <td>${c.year}</td>
-            <td><span class="badge badge-${c.status}">${c.status === 'published' ? 'Publicado' : 'Rascunho'}</span></td>
-            <td style="color:var(--gray)">${formatDate(c.updatedAt)}</td>
-            <td>
-              <div class="td-actions" onclick="event.stopPropagation()">
-                <button class="action-btn" onclick="editCase(${c.id})">Editar</button>
-                <button class="action-btn danger" onclick="openDeleteModal(${c.id})">Excluir</button>
-              </div>
-            </td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-  `;
+  container.innerHTML = `<table><thead><tr><th>Cliente</th><th>Serviço</th><th>Setor</th><th>Ano</th><th>Status</th><th>Editado por</th><th>Atualizado</th><th></th></tr></thead><tbody>${data.map(c=>`
+    <tr onclick="editCase(${c.id})">
+      <td class="td-title">${c.client}</td>
+      <td>${c.service}</td>
+      <td>${c.sector}</td>
+      <td>${c.year}</td>
+      <td><span class="badge badge-${c.status}">${c.status==='published'?'Publicado':'Rascunho'}</span></td>
+      <td style="color:var(--gray)">${c.updatedBy||'—'}</td>
+      <td style="color:var(--gray)">${formatDate(c.updatedAt)}</td>
+      <td><div class="td-actions" onclick="event.stopPropagation()">
+        <button class="action-btn" onclick="editCase(${c.id})">Editar</button>
+        <button class="action-btn" onclick="duplicateCase(${c.id})">Duplicar</button>
+        <button class="action-btn danger" onclick="openDeleteModal(${c.id})">Excluir</button>
+      </div></td>
+    </tr>`).join('')}</tbody></table>`;
 }
 
-function renderDashboardTable() {
-  renderTable(cases.slice(0, 5), document.getElementById('dashboardTable'));
+function renderDashboardTable() { renderTable(cases.slice(0,5), document.getElementById('dashboardTable')); }
+function renderCasesTable(data) { renderTable(data, document.getElementById('casesTable')); }
+
+function filterCases(q) {
+  renderCasesTable(cases.filter(c =>
+    c.client.toLowerCase().includes(q.toLowerCase()) ||
+    c.service.toLowerCase().includes(q.toLowerCase()) ||
+    c.sector.toLowerCase().includes(q.toLowerCase())
+  ));
 }
 
-function renderCasesTable(data) {
-  renderTable(data, document.getElementById('casesTable'));
-}
-
-function filterCases(query) {
-  const filtered = cases.filter(c =>
-    c.client.toLowerCase().includes(query.toLowerCase()) ||
-    c.service.toLowerCase().includes(query.toLowerCase()) ||
-    c.sector.toLowerCase().includes(query.toLowerCase())
-  );
-  renderCasesTable(filtered);
+function filterByStatus(status) {
+  renderCasesTable(status ? cases.filter(c => c.status === status) : cases);
 }
 
 // ─── EDITOR ───
 function resetForm() {
-  editingId = null;
+  editingId = null; caseHistory = [];
   ['f_client','f_service','f_sector','f_year','f_introTitle','f_introP1','f_introP2','f_deliverables','f_nextCase'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
+    const el = document.getElementById(id); if (el) el.value = '';
   });
   document.getElementById('f_status').value = 'draft';
-  document.getElementById('dynamicSections').innerHTML = '';
-  sectionCount = 0;
-  updateSectionCount();
   document.getElementById('heroPreview').style.display = 'none';
-  document.getElementById('heroUpload').querySelector('.img-upload-text').style.display = 'block';
-  updateChecklist();
+  document.getElementById('heroRemove').style.display = 'none';
+  document.getElementById('heroUpload').style.display = 'block';
+  document.getElementById('galleryGrid').innerHTML = '';
+  document.getElementById('dynamicSections').innerHTML = '';
+  sectionCount = 0; updateSectionCount(); updateChecklist(); renderHistory();
 }
 
 function editCase(id) {
   const c = cases.find(x => x.id === id);
   if (!c) return;
-  editingId = id;
+  editingId = id; caseHistory = [];
   showView('newCase');
   document.getElementById('f_client').value = c.client;
   document.getElementById('f_service').value = c.service;
   document.getElementById('f_sector').value = c.sector;
   document.getElementById('f_year').value = c.year;
   document.getElementById('f_status').value = c.status;
+  document.getElementById('f_introTitle').value = c.introTitle || '';
   document.getElementById('topbarTitle').textContent = `Editando: ${c.client}`;
-  updateChecklist();
-  showToast('Case carregado para edição');
+  document.getElementById('dynamicSections').innerHTML = '';
+  sectionCount = 0;
+  if (c.sections && c.sections.length) {
+    c.sections.forEach(s => { addSection(s.name); });
+  }
+  updateSectionCount(); updateChecklist();
+  addHistory(`Case "${c.client}" carregado para edição`);
+  showToast('Case carregado', 'success');
+}
+
+function duplicateCase(id) {
+  const c = cases.find(x => x.id === id);
+  if (!c) return;
+  const copy = { ...c, id: Date.now(), client: c.client + ' (cópia)', status: 'draft', updatedAt: new Date().toISOString().slice(0,10), updatedBy: currentUser.name };
+  cases.unshift(copy);
+  updateStats(); renderDashboardTable(); renderCasesTable(cases);
+  showToast('Case duplicado como rascunho', 'success');
 }
 
 function saveCase() {
   const client = document.getElementById('f_client').value.trim();
-  if (!client) { showToast('Preencha o nome do cliente'); return; }
+  if (!client) { showToast('Preencha o nome do cliente', 'error'); return; }
+
+  const activeSections = [...document.querySelectorAll('#dynamicSections .section-block:not(.disabled)')].map((block, i) => ({
+    name: block.querySelector('.section-name-label')?.textContent || `Seção ${i+1}`,
+    title: block.querySelector('input[type="text"]')?.value || '',
+    text: block.querySelector('textarea')?.value || '',
+  }));
 
   const data = {
     id: editingId || Date.now(),
@@ -1369,23 +820,168 @@ function saveCase() {
     sector: document.getElementById('f_sector').value || '—',
     year: document.getElementById('f_year').value || new Date().getFullYear().toString(),
     status: document.getElementById('f_status').value,
+    introTitle: document.getElementById('f_introTitle').value,
+    sections: activeSections,
     updatedAt: new Date().toISOString().slice(0,10),
+    updatedBy: currentUser.name,
   };
 
   if (editingId) {
     const idx = cases.findIndex(c => c.id === editingId);
     cases[idx] = data;
-    showToast('Case atualizado com sucesso!');
+    addHistory(`Case salvo por ${currentUser.name}`);
+    showToast('Case atualizado!', 'success');
   } else {
     cases.unshift(data);
-    showToast('Case criado com sucesso!');
+    addHistory(`Case criado por ${currentUser.name}`);
+    showToast('Case criado!', 'success');
   }
 
-  editingId = null;
-  updateStats();
-  renderDashboardTable();
-  renderCasesTable(cases);
-  setTimeout(() => showView('cases'), 800);
+  editingId = data.id;
+  updateStats(); renderDashboardTable(); renderCasesTable(cases);
+  document.getElementById('topbarTitle').textContent = `Editando: ${client}`;
+}
+
+// ─── SEÇÕES DINÂMICAS ───
+function generateSections() {
+  const raw = document.getElementById('f_deliverables').value.trim();
+  if (!raw) { showToast('Preencha os entregáveis primeiro', 'error'); return; }
+  const items = raw.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!items.length) return;
+  document.getElementById('dynamicSections').innerHTML = '';
+  sectionCount = 0;
+  items.forEach(name => addSection(name));
+  updateSectionCount();
+  showToast(`${items.length} seções geradas!`, 'success');
+  document.getElementById('dynamicSections').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function addSection(name = '') {
+  sectionCount++;
+  const num = sectionCount;
+  const id = 'section_' + Date.now() + '_' + num;
+  const container = document.getElementById('dynamicSections');
+  const div = document.createElement('div');
+  div.className = 'section-block';
+  div.id = id;
+  div.draggable = true;
+
+  div.innerHTML = `
+    <div class="section-block-header">
+      <span class="section-block-title">
+        <span class="section-num">${num}</span>
+        <span class="section-name-label">${name || 'Nova seção'}</span>
+      </span>
+      <div class="section-controls">
+        <span class="drag-handle" title="Arrastar para reordenar">⠿</span>
+        <button type="button" class="section-keep-toggle" onclick="toggleKeepSection(this,'${id}')">✓ Incluir</button>
+        <span class="section-toggle-arrow" onclick="toggleSection(this.closest('.section-block-header'))">▲</span>
+      </div>
+    </div>
+    <div class="section-block-body open">
+      <div class="field"><label>Título da seção</label><input type="text" placeholder="Ex: Não basta ser diferente..."></div>
+      <div class="field"><label>Texto</label><textarea placeholder="Descreva o que foi desenvolvido nessa etapa..."></textarea></div>
+      <div class="field">
+        <div class="img-toggle-row">
+          <input type="checkbox" id="img_chk_${id}" onchange="toggleImgField(this,'img_wrap_${id}')">
+          <label for="img_chk_${id}">Adicionar imagem nesta seção</label>
+        </div>
+        <div id="img_wrap_${id}" style="display:none">
+          <div class="img-upload" style="padding:1rem">
+            <input type="file" accept="image/*">
+            <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  // Drag and drop
+  div.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', id); div.classList.add('dragging'); });
+  div.addEventListener('dragend', () => { div.classList.remove('dragging'); document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over')); });
+  div.addEventListener('dragover', e => { e.preventDefault(); div.classList.add('drag-over'); });
+  div.addEventListener('dragleave', () => div.classList.remove('drag-over'));
+  div.addEventListener('drop', e => {
+    e.preventDefault();
+    div.classList.remove('drag-over');
+    const dragId = e.dataTransfer.getData('text/plain');
+    const dragEl = document.getElementById(dragId);
+    if (dragEl && dragEl !== div) {
+      container.insertBefore(dragEl, div);
+      renumberSections();
+    }
+  });
+
+  container.appendChild(div);
+  updateSectionCount();
+  updateChecklist();
+}
+
+function toggleKeepSection(btn, id) {
+  const block = document.getElementById(id);
+  const isExcluded = block.classList.contains('disabled');
+  block.classList.toggle('disabled', !isExcluded);
+  btn.classList.toggle('excluded', !isExcluded);
+  btn.textContent = isExcluded ? '✓ Incluir' : '✕ Excluída';
+  updateSectionCount();
+  updateChecklist();
+}
+
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+  const arrow = header.querySelector('.section-toggle-arrow');
+  if (arrow) arrow.textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+function renumberSections() {
+  document.querySelectorAll('#dynamicSections .section-num').forEach((el, i) => { el.textContent = i + 1; });
+}
+
+function updateSectionCount() {
+  const active = document.querySelectorAll('#dynamicSections .section-block:not(.disabled)').length;
+  const total = document.querySelectorAll('#dynamicSections .section-block').length;
+  const el = document.getElementById('sectionCount');
+  if (el) el.textContent = total ? `(${active} de ${total} ativas)` : '';
+  updateChecklist();
+}
+
+function toggleImgField(cb, wrapId) {
+  document.getElementById(wrapId).style.display = cb.checked ? 'block' : 'none';
+}
+
+// ─── IMAGENS ───
+function previewImage(input, previewId, uploadId, removeId) {
+  if (!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(previewId);
+    img.src = e.target.result; img.style.display = 'block';
+    document.getElementById(uploadId).style.display = 'none';
+    document.getElementById(removeId).style.display = 'block';
+    updateChecklist();
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function removeHero() {
+  document.getElementById('heroPreview').style.display = 'none';
+  document.getElementById('heroRemove').style.display = 'none';
+  document.getElementById('heroUpload').style.display = 'block';
+  updateChecklist();
+}
+
+function previewGallery(input) {
+  const grid = document.getElementById('galleryGrid');
+  [...input.files].forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const wrap = document.createElement('div');
+      wrap.className = 'gallery-thumb';
+      wrap.innerHTML = `<img src="${e.target.result}"><button class="gallery-thumb-remove" onclick="this.parentElement.remove()">✕</button>`;
+      grid.appendChild(wrap);
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 // ─── CHECKLIST ───
@@ -1396,171 +992,163 @@ function updateChecklist() {
     chk_sector: !!document.getElementById('f_sector')?.value.trim(),
     chk_intro: !!document.getElementById('f_introTitle')?.value.trim(),
     chk_hero: document.getElementById('heroPreview')?.style.display === 'block',
+    chk_sections: document.querySelectorAll('#dynamicSections .section-block:not(.disabled)').length > 0,
   };
-
   Object.entries(checks).forEach(([id, done]) => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('done', done);
   });
 }
 
-// ─── IMAGEM ───
-function previewImage(input, previewId, uploadId) {
-  if (!input.files[0]) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = document.getElementById(previewId);
-    img.src = e.target.result;
-    img.style.display = 'block';
-    document.getElementById(uploadId).querySelector('.img-upload-text').style.display = 'none';
-    updateChecklist();
-  };
-  reader.readAsDataURL(input.files[0]);
+// ─── HISTÓRICO ───
+function addHistory(text) {
+  const now = new Date();
+  const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  caseHistory.unshift({ text, time, recent: true });
+  if (caseHistory.length > 1) caseHistory[1].recent = false;
+  renderHistory();
 }
 
-// ─── SEÇÕES DINÂMICAS ───
-let sectionCount = 0;
-
-function addSection(name = '') {
-  sectionCount++;
-  const num = sectionCount;
-  const container = document.getElementById('dynamicSections');
-  const id = 'section_' + num;
-
-  const div = document.createElement('div');
-  div.className = 'section-block';
-  div.id = id;
-  div.innerHTML = `
-    <div class="section-block-header">
-      <span class="section-block-title">
-        <span class="section-num">${num}</span>
-        <span style="font-size:.82rem;font-weight:600">${name || 'Nova seção'}</span>
-      </span>
-      <div style="display:flex;align-items:center;gap:.5rem">
-        <button type="button" class="section-keep-toggle" id="toggle_${id}" onclick="toggleKeepSection(this, '${id}')">✓ Incluir</button>
-        <span style="font-size:.7rem;color:var(--gray);cursor:pointer" onclick="toggleSection(this.closest('.section-block-header'))">▲</span>
-      </div>
-    </div>
-    <div class="section-block-body open">
-      <div class="field">
-        <label>Título da seção</label>
-        <input type="text" placeholder="Ex: Não basta ser diferente...">
-      </div>
-      <div class="field">
-        <label>Texto</label>
-        <textarea placeholder="Descreva o que foi desenvolvido nessa etapa..."></textarea>
-      </div>
-      <div class="field">
-        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem">
-          <input type="checkbox" id="img_toggle_\${num}" onchange="toggleImgField(this, 'img_wrap_\${num}')" style="cursor:pointer;width:14px;height:14px">
-          <label for="img_toggle_\${num}" style="font-size:.7rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--gray2);cursor:pointer;margin:0">Adicionar imagem nesta seção</label>
-        </div>
-        <div id="img_wrap_\${num}" style="display:none">
-          <div class="img-upload" style="padding:1rem">
-            <input type="file" accept="image/*">
-            <div class="img-upload-text" style="font-size:.75rem"><strong>Upload de imagem</strong> — 1400×900px recomendado</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  container.appendChild(div);
-  renumberSections();
-}
-
-function generateSections() {
-  const raw = document.getElementById('f_deliverables').value.trim();
-  if (!raw) { showToast('Preencha os entregáveis primeiro'); return; }
-
-  const items = raw.split('\n').map(s => s.trim()).filter(Boolean);
-  if (!items.length) { showToast('Nenhum entregável encontrado'); return; }
-
-  // Limpar seções existentes
-  document.getElementById('dynamicSections').innerHTML = '';
-  sectionCount = 0;
-
-  // Criar uma seção para cada entregável
-  items.forEach(name => addSection(name));
-
-  updateSectionCount();
-  showToast(`${items.length} seções geradas com sucesso!`);
-
-  // Scroll suave até as seções
-  document.getElementById('dynamicSections').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function updateSectionCount() {
-  const total = document.querySelectorAll('#dynamicSections .section-block:not(.excluded-section)').length;
-  const counter = document.getElementById('sectionCount');
-  if (counter) counter.textContent = total ? `(${total} ativas)` : '';
-}
-
-function toggleKeepSection(btn, id) {
-  const block = document.getElementById(id);
-  const isExcluded = block.classList.contains('disabled');
-
-  if (isExcluded) {
-    block.classList.remove('disabled');
-    btn.classList.remove('excluded');
-    btn.textContent = '✓ Incluir';
-    block.classList.remove('excluded-section');
-  } else {
-    block.classList.add('disabled');
-    btn.classList.add('excluded');
-    btn.textContent = '✕ Excluída';
-    block.classList.add('excluded-section');
+function renderHistory() {
+  const el = document.getElementById('historyList');
+  if (!el) return;
+  if (!caseHistory.length) {
+    el.innerHTML = '<div style="font-size:.75rem;color:var(--gray)">Nenhuma alteração ainda.</div>';
+    return;
   }
-  updateSectionCount();
+  el.innerHTML = caseHistory.slice(0,5).map(h => `
+    <div class="history-item ${h.recent ? 'recent' : ''}">
+      <span class="history-dot"></span>
+      <div><div class="history-text">${h.text}</div><div class="history-time">${h.time}</div></div>
+    </div>`).join('');
 }
 
-function toggleImgField(checkbox, wrapId) {
-  document.getElementById(wrapId).style.display = checkbox.checked ? 'block' : 'none';
+// ─── PREVIEW ───
+function openPreview() {
+  const client = document.getElementById('f_client').value || 'Case sem título';
+  const service = document.getElementById('f_service').value || '—';
+  const sector = document.getElementById('f_sector').value || '—';
+  const year = document.getElementById('f_year').value || '—';
+  const introTitle = document.getElementById('f_introTitle').value || '';
+  const p1 = document.getElementById('f_introP1').value || '';
+  const p2 = document.getElementById('f_introP2').value || '';
+  const heroSrc = document.getElementById('heroPreview').src;
+  const hasHero = document.getElementById('heroPreview').style.display === 'block';
+
+  const sections = [...document.querySelectorAll('#dynamicSections .section-block:not(.disabled)')].map((block, i) => ({
+    name: block.querySelector('.section-name-label')?.textContent || `Seção ${i+1}`,
+    title: block.querySelector('input[type="text"]')?.value || '',
+    text: block.querySelector('textarea')?.value || '',
+  }));
+
+  document.getElementById('previewBody').innerHTML = `
+    <div class="preview-case">
+      ${hasHero ? `<img src="${heroSrc}" style="width:100%;aspect-ratio:16/7;object-fit:cover;margin-bottom:1.5rem">` : ''}
+      <div class="preview-meta">
+        <div class="preview-meta-item"><label>Cliente</label><span>${client}</span></div>
+        <div class="preview-meta-item"><label>Serviço</label><span>${service}</span></div>
+        <div class="preview-meta-item"><label>Setor</label><span>${sector}</span></div>
+        <div class="preview-meta-item"><label>Ano</label><span>${year}</span></div>
+      </div>
+      ${introTitle ? `<h2 class="preview-title">${introTitle}</h2>` : ''}
+      ${p1 ? `<p class="preview-text">${p1}</p>` : ''}
+      ${p2 ? `<p class="preview-text">${p2}</p>` : ''}
+      ${sections.map((s,i) => `
+        <div class="preview-section">
+          <p class="preview-section-step">0${i+1} — ${s.name}</p>
+          ${s.title ? `<h3 class="preview-section-title">${s.title}</h3>` : ''}
+          ${s.text ? `<p class="preview-text">${s.text}</p>` : ''}
+        </div>`).join('')}
+    </div>`;
+
+  document.getElementById('previewModal').classList.add('open');
 }
 
-function removeSection(id) {
-  document.getElementById(id)?.remove();
-  renumberSections();
+// ─── USUÁRIOS ───
+function renderUsers() {
+  const grid = document.getElementById('usersGrid');
+  if (!grid) return;
+  grid.innerHTML = USERS.map(u => `
+    <div class="user-card">
+      <div class="user-card-avatar">${u.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+      <div class="user-card-info">
+        <div class="user-card-name">${u.name}</div>
+        <div class="user-card-email">${u.email}</div>
+        <span class="role-badge role-${u.role}">${u.role === 'admin' ? 'Administrador' : 'Editor'}</span>
+        <div class="user-card-actions" style="margin-top:.8rem">
+          <button class="action-btn" onclick="openUserModal(${u.id})">Editar</button>
+          ${u.id !== currentUser.id ? `<button class="action-btn danger" onclick="deleteUser(${u.id})">Remover</button>` : '<span style="font-size:.72rem;color:var(--gray)">Você</span>'}
+        </div>
+      </div>
+    </div>`).join('');
 }
 
-function renumberSections() {
-  document.querySelectorAll('#dynamicSections .section-num').forEach((el, i) => {
-    el.textContent = i + 1;
-  });
+function openUserModal(id) {
+  editingUserId = id || null;
+  document.getElementById('userModalTitle').textContent = id ? 'Editar Usuário' : 'Novo Usuário';
+  if (id) {
+    const u = USERS.find(x => x.id === id);
+    document.getElementById('u_name').value = u.name;
+    document.getElementById('u_email').value = u.email;
+    document.getElementById('u_pass').value = '';
+    document.getElementById('u_role').value = u.role;
+  } else {
+    document.getElementById('u_name').value = '';
+    document.getElementById('u_email').value = '';
+    document.getElementById('u_pass').value = '';
+    document.getElementById('u_role').value = 'editor';
+  }
+  document.getElementById('userModal').classList.add('open');
 }
 
-function toggleSection(header) {
-  const body = header.nextElementSibling;
-  body.classList.toggle('open');
-  const arrow = header.querySelector('span[style*="cursor:pointer"]') || header.querySelector('span:last-child');
-  if (arrow) arrow.textContent = body.classList.contains('open') ? '▲' : '▼';
+function saveUser() {
+  const name = document.getElementById('u_name').value.trim();
+  const email = document.getElementById('u_email').value.trim();
+  const pass = document.getElementById('u_pass').value;
+  const role = document.getElementById('u_role').value;
+  if (!name || !email) { showToast('Preencha nome e email', 'error'); return; }
+  if (editingUserId) {
+    const u = USERS.find(x => x.id === editingUserId);
+    u.name = name; u.email = email; u.role = role;
+    if (pass) u.pass = pass;
+    showToast('Usuário atualizado', 'success');
+  } else {
+    if (!pass) { showToast('Defina uma senha', 'error'); return; }
+    USERS.push({ id: Date.now(), name, email, pass, role });
+    showToast('Usuário criado', 'success');
+  }
+  closeModal('userModal');
+  renderUsers();
 }
 
-// ─── DELETE ───
-function openDeleteModal(id) {
-  deleteTargetId = id;
-  document.getElementById('deleteModal').classList.add('open');
+function deleteUser(id) {
+  if (id === currentUser.id) { showToast('Não é possível remover sua própria conta', 'error'); return; }
+  USERS = USERS.filter(u => u.id !== id);
+  renderUsers();
+  showToast('Usuário removido', 'success');
 }
 
-function closeModal() {
-  document.getElementById('deleteModal').classList.remove('open');
-  deleteTargetId = null;
-}
+// ─── DELETE CASE ───
+function openDeleteModal(id) { deleteTargetId = id; document.getElementById('deleteModal').classList.add('open'); }
 
 function confirmDelete() {
   cases = cases.filter(c => c.id !== deleteTargetId);
-  closeModal();
-  updateStats();
-  renderDashboardTable();
-  renderCasesTable(cases);
-  showToast('Case excluído.');
+  closeModal('deleteModal');
+  updateStats(); renderDashboardTable(); renderCasesTable(cases);
+  showToast('Case excluído', 'success');
+}
+
+// ─── MODAIS ───
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  deleteTargetId = null;
 }
 
 // ─── TOAST ───
-function showToast(msg) {
+function showToast(msg, type = '') {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.classList.add('show');
+  t.className = 'toast show' + (type ? ' ' + type : '');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 </script>
